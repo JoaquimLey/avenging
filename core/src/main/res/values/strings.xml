@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Avenging</string>
+    <string name="marvel_characters">Marvel Characters</string>
+    <string name="marvel_copyright_notice">All Data provided by Marvel. © 2016 MARVEL</string>
+
+    <string name="action_acknowledge">Acknowledge</string>
+    <string name="action_try_again">Try Again</string>
+    <string name="action_check_again">Check Again</string>
+    <string name="action_search">Search…</string>
+
+    <!-- Character Details -->
+    <string name="description">Description</string>
+    <string name="comics">Comics</string>
+    <string name="events">Events</string>
+    <string name="series">Series</string>
+    <string name="stories">Stories</string>
+    <string name="related_links">Related Links</string>
+    <string name="character_details">Character Details</string>
+
+    <string name="btn_close_description">Close Button</string>
+    <string name="page_count_placeholder">%1$s/%2$s</string>
+    <!-- Errors -->
+    <string name="error_no_char_info_to_display">No Character info to display</string>
+    <string name="error_no_items_to_display">No items to display</string>
+    <string name="error_no_network">No networking connection!</string>
+    <string name="error_generic_server_error">There was na error contacting the server, %1$s</string>
+</resources>

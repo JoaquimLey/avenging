@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/progress_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_loading_height"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_margin="@dimen/item_loading_margin"
+    android:padding="@dimen/item_loading_padding" />

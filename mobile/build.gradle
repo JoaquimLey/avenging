@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+    publishNonDefault true
+
+    defaultConfig {
+        applicationId "com.joaquimley.avenging"
+        minSdkVersion 17
+        targetSdkVersion 24
+        versionCode 2
+        versionName "1.0"
+    }
+
+    lintOptions {
+        warning 'InvalidPackage'
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+        }
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    final SUPPORT_LIBRARY_VERSION = '24.1.1'
+    final PICASSO_VERSION = '2.5.2'
+    final ESPRESSO_VERSION = '2.2.1'
+
+    compile project(':core')
+    compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
+    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
+    // Functional tests dependencies
+//    androidTestCompile ("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION") {
+//        transitive = false;
+//    }
+}

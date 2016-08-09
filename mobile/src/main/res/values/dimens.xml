@@ -1,0 +1,27 @@
+<resources>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="button_margin">30dp</dimen>
+
+    <dimen name="item_gallery_height">200dp</dimen>
+    <dimen name="item_list_height">70dp</dimen>
+    <dimen name="item_list_image_height">@dimen/item_list_height</dimen>
+    <dimen name="item_list_image_width">@dimen/item_list_height</dimen>
+    <dimen name="item_list_image_margin">20dp</dimen>
+    <dimen name="item_loading_height">50dp</dimen>
+    <dimen name="item_loading_margin">8dp</dimen>
+    <dimen name="item_loading_padding">10dp</dimen>
+
+    <dimen name="detail_header_image_height">200dp</dimen>
+    <dimen name="detail_description_layout_bottom_margin">0dp</dimen>
+    <dimen name="detail_description_text_top_margin">24dp</dimen>
+
+    <dimen name="item_comic_layout_height">170dp</dimen>
+    <dimen name="item_comic_layout_width">@dimen/item_comic_image_width</dimen>
+    <dimen name="item_comic_layout_margin_end">6dp</dimen>
+    <dimen name="item_comic_image_width">90dp</dimen>
+    <dimen name="item_comic_image_height">120dp</dimen>
+    <dimen name="comic_title_padding">2dp</dimen>
+</resources>

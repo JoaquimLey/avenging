@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_list_height"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image"
+        android:transitionName="@string/transaction_header"
+        android:layout_width="@dimen/item_list_image_width"
+        android:layout_height="@dimen/item_list_image_height"
+        android:layout_marginEnd="@dimen/item_list_image_margin" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/ItemListName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAlignment="center" />
+</LinearLayout>

@@ -1,0 +1,42 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.BrandedLaunch" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+
+    <style name="AppTheme.CharacterActivity" parent="AppTheme">
+
+    </style>
+
+    <style name="ItemListName" parent="TextAppearance.AppCompat.Light.SearchResult.Subtitle">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ItemTitleName" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">@color/colorPrimaryDark</item>
+        <item name="android:shadowRadius">3.0</item>
+    </style>
+
+    <style name="ItemDetailTitle" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="SubItemPagerTitle" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ComicPageCounter" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/lightGray</item>
+    </style>
+
+</resources>

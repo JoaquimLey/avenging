@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+
+        if (System.getenv().containsKey("IS_CI_JOB")) {
+            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
+            buildConfigField("String", "PUBLIC_KEY", "\"" + System.getenv("CI_PUBLIC_KEY") + "\"")
+            buildConfigField("String", "PRIVATE_KEY", "\"" + System.getenv("CI_PRIVATE_KEY") + "\"")
+        } else {
+            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"${marvelProductionEndpoint}\"")
+            buildConfigField("String", "PUBLIC_KEY", "\"${marvelPublicKey}\"")
+            buildConfigField("String", "PRIVATE_KEY", "\"${marvelPrivateKey}\"")
+        }
+    }
+
+    // ref https://github.com/square/okio/issues/58
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+    final SUPPORT_LIBRARY_VERSION = '24.0.0'
+    final RETROFIT_VERSION = '2.0.2'
+    final OK_HTTP_VERSION = '3.0.0'
+    final LEAK_CANARY_VERSION = '1.3.1'
+    final MOCKITO_VERSION = '1.10.5'
+    final JUNIT_VERSION = '4.12'
+
+    compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-jackson:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:logging-interceptor:$OK_HTTP_VERSION"
+    // LeakCanary
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAK_CANARY_VERSION"
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$LEAK_CANARY_VERSION"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAK_CANARY_VERSION"
+    // Unit tests dependencies
+    testCompile "junit:junit:$JUNIT_VERSION"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+}

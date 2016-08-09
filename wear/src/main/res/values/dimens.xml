@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_name_margin">30dp</dimen>
+    <dimen name="text_margin">8dp</dimen>
+    <dimen name="item_loading_padding">8dp</dimen>
+    <dimen name="button_margin">15dp</dimen>
+    <dimen name="error_image_top_margin">20dp</dimen>
+</resources>

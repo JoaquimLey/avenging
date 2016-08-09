@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+    publishNonDefault true
+
+    defaultConfig {
+        applicationId "com.joaquimley.avenging"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    final PICASSO_VERSION = '2.5.2'
+    final PLAY_SERVICES_WEARABLE_VERSION = '9.2.1'
+    final SUPPORT_WEARABLE_VERSION = '2.0.0-alpha1'
+
+    compile project(':core')
+    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
+    compile "com.google.android.support:wearable:$SUPPORT_WEARABLE_VERSION"
+    compile "com.google.android.gms:play-services-wearable:$PLAY_SERVICES_WEARABLE_VERSION"
+}

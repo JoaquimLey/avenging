@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/colorPrimary"/>
+    </item>
+    <item>
+        <bitmap
+            android:src="@drawable/joaquimley_logo_w"
+            android:tileMode="disabled"
+            android:gravity="center" />
+    </item>
+</layer-list>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/btn_close_description"
+        android:padding="@dimen/button_margin"
+        android:src="@drawable/ic_clear" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_comic_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_copyright_notice"
+        style="@style/ComicPageCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/marvel_copyright_notice"
+        android:gravity="center"
+        android:padding="@dimen/comic_title_padding" />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_page_count"
+        style="@style/ComicPageCounter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/comic_title_padding" />
+</LinearLayout>
