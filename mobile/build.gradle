@@ -9,7 +9,7 @@ android {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 2
+        versionCode 3
         versionName "1.0"
     }
 
@@ -26,7 +26,7 @@ android {
         }
         release {
             minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

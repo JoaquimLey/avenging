@@ -37,7 +37,6 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VIEW_TYPE_GALLERY = 0;
     public static final int VIEW_TYPE_LIST = 1;
     public static final int VIEW_TYPE_LOADING = 2;
-
     @IntDef({VIEW_TYPE_LOADING, VIEW_TYPE_GALLERY, VIEW_TYPE_LIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ViewType {}
@@ -49,18 +48,6 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mCharacterList = new ArrayList<>();
         mViewType = VIEW_TYPE_GALLERY;
         mListInteractionListener = null;
-    }
-
-    public ListAdapter(InteractionListener listener) {
-        mCharacterList = new ArrayList<>();
-        mViewType = VIEW_TYPE_GALLERY;
-        mListInteractionListener = listener;
-    }
-
-    public ListAdapter(@ViewType int viewType, InteractionListener listener) {
-        mCharacterList = new ArrayList<>();
-        mViewType = viewType;
-        mListInteractionListener = listener;
     }
 
     @Override
@@ -156,13 +143,6 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         mCharacterList.remove(position);
         notifyItemRemoved(position);
-    }
-
-    public void removeItems(List<Integer> itemsPositionsList) {
-        notifyItemRangeInserted(getItemCount(), mCharacterList.size() - 1);
-        for (int i = 0; i < itemsPositionsList.size(); i++) {
-            remove(itemsPositionsList.get(i));
-        }
     }
 
     public void removeAll() {

@@ -1,11 +1,13 @@
 ![AppIcon](https://github.com/JoaquimLey/avenging/blob/development/core/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 #Avenging - MVP project
-[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://travis-ci.com/JoaquimLey/avenging.svg?token=HypHksy1UBwv1YpbgzSN&branch=development)](https://travis-ci.com/JoaquimLey/avenging)
+[![Gitter room](https://img.shields.io/gitter/room/badges/shields.svg?style=false)](https://gitter.im/joaquim-ley/avenging)
+[![Build Status](https://travis-ci.com/JoaquimLey/avenging-development.svg?token=HypHksy1UBwv1YpbgzSN&branch=development)](https://travis-ci.com/JoaquimLey/avenging-development)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fa075cf6a50a4bc0b875406842f1496a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JoaquimLey/avenging&amp;utm_campaign=Badge_Grade)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
+[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
+
 ###Read more on the blog post: < soon >
 
 Android app built with an **MVP** approach **without** RxJava or Dagger. 
@@ -13,6 +15,18 @@ Android app built with an **MVP** approach **without** RxJava or Dagger.
 Uses [Marvel Comics API](https://developer.marvel.com) as a service which contains all the information about Marvel's vast library.
 
 _Data provided by Marvel. © 2016 MARVEL_
+
+
+What is MVP (ModelViewPresenter)?
+---------------------------
+- View is a layer that displays data and reacts to user actions. On Android, this could be an Activity, a Fragment, an android.view.View or a Dialog.
+- Model is a data access layer such as database API or remote server API.
+- Presenter is a layer that provides View with data from Model. Presenter also handles background tasks.
+
+Most of the modern Android applications just use View-Model architecture.
+Programmers are involved into fight with View complexities instead of solving business tasks.
+Using only Model-View in your application you usually end up with "everything is connected with everything", which translates into harder scalability. With the MVP approach it easier to understand the role of each element, stop wasting time on boring code maintenance and use it to build awesome stuff! 
+
 
 ![Mobile List](../development/art/ss_mobile_list.png) 
 ![Mobile Load More](../development/art/ss_mobile_load_more.png) 
@@ -30,7 +44,7 @@ _Data provided by Marvel. © 2016 MARVEL_
 [![Get it on Google Play](../development/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.avenging)
 
 ## Configs & API authentication
-If you wish to run your own Travis (CI) ensure you have the following environment variables (you can costumize your own  on **core:build.gradle**):
+If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables:
 
 * IS_ CI_JOB = true
 * CI_ PRODUCTION_ENDPOINT = http://gateway.marvel.com/v1/public/
@@ -38,7 +52,7 @@ If you wish to run your own Travis (CI) ensure you have the following environmen
 * CI_ PRIVATE_KEY = < YOUR-PRIVATE-KEY >
 
 
-Put your private and public keys in your **gradle.properties** file (project's root folder).
+To run **locally** have your private and public keys in your **gradle.properties** file (project's root folder).
 
 * marvelProductionEndpoint = http://gateway.marvel.com/v1/public/
 * marvelPublicKey = < YOUR-PUBLIC-KEY >

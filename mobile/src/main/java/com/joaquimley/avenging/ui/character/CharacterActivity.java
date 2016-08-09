@@ -3,7 +3,6 @@ package com.joaquimley.avenging.ui.character;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.joaquimley.avenging.R;
 import com.joaquimley.avenging.ui.base.BaseActivity;
@@ -35,11 +34,5 @@ public class CharacterActivity extends BaseActivity {
                     .replace(R.id.character_container, CharacterFragment.newInstance(characterMarvel))
                     .commit();
         }
-        showCopyRightSnackbar();
-    }
-
-    @Override
-    protected View getContainerView() {
-        return findViewById(R.id.character_container);
     }
 }

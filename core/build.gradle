@@ -7,8 +7,6 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
 
         if (System.getenv().containsKey("IS_CI_JOB")) {
             buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
