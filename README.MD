@@ -1,5 +1,6 @@
 ![AppIcon](https://github.com/JoaquimLey/avenging/blob/development/core/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
-#Avenging - MVP
+
+#Avenging - MVP project
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.com/JoaquimLey/avenging.svg?token=HypHksy1UBwv1YpbgzSN&branch=development)](https://travis-ci.com/JoaquimLey/avenging)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fa075cf6a50a4bc0b875406842f1496a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JoaquimLey/avenging&amp;utm_campaign=Badge_Grade)
@@ -18,7 +19,7 @@ _Data provided by Marvel. © 2016 MARVEL_
 ![Mobile Search](../development/art/ss_mobile_search.png)
 ![Mobile List Error](../development/art/ss_mobile_list_error.png)
 ![Mobile Profile](../development/art/ss_mobile_profile.png) 
-![Mobile Comic](../misc-readme/art/ss_mobile_comic.png) 
+![Mobile Comic](../development/art/ss_mobile_comic.png) 
 
 ![Wear List Loading](../development/art/ss_wear_loading.png)
 ![Wear List Gallery](../development/art/ss_wear_list_gallery.png)
