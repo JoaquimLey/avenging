@@ -25,14 +25,12 @@ import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.ui.character.CharacterPresenter;
 import com.joaquimley.core.ui.character.CharacterPresenterView;
-import com.joaquimley.core.ui.comic.ComicPresenter;
-import com.joaquimley.core.ui.comic.ComicPresenterView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
-public class CharacterFragment extends Fragment implements CharacterPresenterView, ComicPresenterView,
+public class CharacterFragment extends Fragment implements CharacterPresenterView,
         ComicAdapter.InteractionListener {
 
     private static final String ARG_CHARACTER = "argCharacter";
@@ -40,7 +38,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
 
     private AppCompatActivity mActivity;
     private CharacterPresenter mCharacterPresenter;
-    private ComicPresenter mComicPresenter;
 
     private CharacterMarvel mCharacterMarvel;
     private boolean mCharacterDownloaded;
@@ -80,7 +77,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         setRetainInstance(true);
         mActivity = (AppCompatActivity) getActivity();
         mCharacterPresenter = new CharacterPresenter();
-        mComicPresenter = new ComicPresenter();
 
         if (savedInstanceState != null) {
             mCharacterMarvel = savedInstanceState.getParcelable(ARG_CHARACTER);
@@ -104,7 +100,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         View view = inflater.inflate(R.layout.fragment_character, container, false);
 
         mCharacterPresenter.attachView(this);
-        mComicPresenter.attachView(this);
 
         initViews(view);
         if (!mCharacterDownloaded) {
@@ -173,7 +168,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
             mComicWrapper = new ComicFrameWrapper(mActivity, getString(R.string.comics), characterComics, this);
             mContentFrame.addView(mComicWrapper);
             if (!mCharacterDownloaded) {
-                mComicPresenter.getComicList(character.getId(), characterComics.size());
+                mCharacterPresenter.getComicList(character.getId(), characterComics.size());
             }
         }
 
@@ -182,7 +177,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
             mSeriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.series), characterSeries, this);
             mContentFrame.addView(mSeriesWrapper);
             if (!mCharacterDownloaded) {
-                mComicPresenter.getSeriesList(character.getId(), characterSeries.size());
+                mCharacterPresenter.getSeriesList(character.getId(), characterSeries.size());
             }
         }
 
@@ -191,7 +186,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
             mStoriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.stories), characterStories, this);
             mContentFrame.addView(mStoriesWrapper);
             if (!mCharacterDownloaded) {
-                mComicPresenter.getStoriesList(character.getId(), characterStories.size());
+                mCharacterPresenter.getStoriesList(character.getId(), characterStories.size());
             }
         }
 
@@ -200,7 +195,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
             mEventsWrapper = new ComicFrameWrapper(mActivity, getString(R.string.events), characterEvents, this);
             mContentFrame.addView(mEventsWrapper);
             if (!mCharacterDownloaded) {
-                mComicPresenter.getEventsList(character.getId(), characterEvents.size());
+                mCharacterPresenter.getEventsList(character.getId(), characterEvents.size());
             }
         }
 
@@ -284,8 +279,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
     public void onDestroy() {
         mCharacterPresenter.detachView();
         mCharacterPresenter = null;
-        mComicPresenter.detachView();
-        mComicPresenter = null;
         super.onDestroy();
     }
 }
