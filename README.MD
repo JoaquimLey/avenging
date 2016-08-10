@@ -41,7 +41,6 @@ Using only Model-View in your application you usually end up with "everything is
 ![Wear List Error](../development/art/ss_wear_list_error.png)
 
 [![Get it on Google Play](../development/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.avenging)
-Soon! Currently addressing copyright notice with Google
 
 ## Configs & API authentication
 If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables:
