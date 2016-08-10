@@ -12,8 +12,11 @@ import android.widget.TextView;
 import com.joaquimley.avenging.R;
 import com.joaquimley.avenging.ui.base.BaseActivity;
 import com.joaquimley.core.data.model.CharacterMarvel;
+import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.ui.character.CharacterPresenter;
 import com.joaquimley.core.ui.character.CharacterPresenterView;
+
+import java.util.List;
 
 
 public class CharacterActivity extends BaseActivity implements CharacterPresenterView {
@@ -67,6 +70,26 @@ public class CharacterActivity extends BaseActivity implements CharacterPresente
     public void showCharacter(CharacterMarvel character) {
         mCharacter = character;
         // TODO: 04/08/16 see wear module
+    }
+
+    @Override
+    public void showComicList(List<Comic> comicList) {
+
+    }
+
+    @Override
+    public void showSeriesList(List<Comic> seriesList) {
+
+    }
+
+    @Override
+    public void showStoriesList(List<Comic> storiesList) {
+
+    }
+
+    @Override
+    public void showEventsList(List<Comic> eventsList) {
+
     }
 
     @Override
