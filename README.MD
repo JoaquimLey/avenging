@@ -1,19 +1,19 @@
 ![AppIcon](https://github.com/JoaquimLey/avenging/blob/development/core/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
 #Avenging - MVP project
+
+[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Gitter room](https://img.shields.io/gitter/room/badges/shields.svg?style=false)](https://gitter.im/joaquim-ley/avenging)
 [![Build Status](https://travis-ci.com/JoaquimLey/avenging-development.svg?token=HypHksy1UBwv1YpbgzSN&branch=development)](https://travis-ci.com/JoaquimLey/avenging-development)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fa075cf6a50a4bc0b875406842f1496a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JoaquimLey/avenging&amp;utm_campaign=Badge_Grade)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
-[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ###Read more on the blog post: < soon >
 
 Android app built with an **MVP** approach **without** RxJava or Dagger. 
 
-Uses [Marvel Comics API](https://developer.marvel.com) as a service which contains all the information about Marvel's vast library.
-
+Uses [Marvel Comics API](https://developer.marvel.com) as a service which contains all the information about its vast library.
 _Data provided by Marvel. © 2016 MARVEL_
 
 
@@ -40,8 +40,8 @@ Using only Model-View in your application you usually end up with "everything is
 ![Wear List Default](../development/art/ss_wear_list_default.png)
 ![Wear List Error](../development/art/ss_wear_list_error.png)
 
-
 [![Get it on Google Play](../development/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.avenging)
+Soon! Currently addressing copyright notice with Google
 
 ## Configs & API authentication
 If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables:
@@ -86,8 +86,10 @@ Use Espresso to write concise, beautiful, and reliable Android UI tests
 Google Play services.
 * [Google Support Support v4](https://developer.android.com/topic/libraries/support-library/features.html#v4)
 This library is designed to be used with Android 1.6 (API level 4) and higher. It includes the largest set of APIs compared to the other libraries
+* [Picasso](http://square.github.io/picasso/)
+A powerful image downloading and caching library for Android
 
-##Contributing
+## Contributing
 
 Contributions are always welcome!
 Follow the "fork-and-pull" Git workflow.
