@@ -29,15 +29,14 @@ Using only Model-View in your application you usually end up with "everything is
 
 
 ![Mobile List](../development/art/ss_mobile_list.png) 
-![Mobile Load More](../development/art/ss_mobile_load_more.png) 
-![Mobile Search](../development/art/ss_mobile_search.png)
-![Mobile List Error](../development/art/ss_mobile_list_error.png)
 ![Mobile Profile](../development/art/ss_mobile_profile.png) 
-![Mobile Comic](../development/art/ss_mobile_comic.png) 
+![Mobile Comic](../development/art/ss_mobile_comic.png)
+![Mobile Search](../development/art/ss_mobile_search.png)
+![Mobile List Error](../development/art/ss_mobile_list_error.png) 
 
-![Wear List Loading](../development/art/ss_wear_loading.png)
-![Wear List Gallery](../development/art/ss_wear_list_gallery.png)
 ![Wear List Default](../development/art/ss_wear_list_default.png)
+![Wear List Gallery](../development/art/ss_wear_list_gallery.png)
+![Wear List Loading](../development/art/ss_wear_loading.png)
 ![Wear List Error](../development/art/ss_wear_list_error.png)
 
 [![Get it on Google Play](../development/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.avenging)
