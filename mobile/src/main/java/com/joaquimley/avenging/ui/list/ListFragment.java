@@ -107,6 +107,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
 
         mCharactersRecycler = (RecyclerView) view.findViewById(R.id.recycler_characters);
         mCharactersRecycler.setHasFixedSize(true);
+        mCharactersRecycler.setMotionEventSplittingEnabled(false);
         mCharactersRecycler.setItemAnimator(new DefaultItemAnimator());
         mCharactersRecycler.setAdapter(mListCharacterAdapter);
 
@@ -260,7 +261,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
                         mSearchQuery = "";
-                        onRefresh();
+                        mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_LIST);
                         return true;
                     }
                 });
