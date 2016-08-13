@@ -1,18 +1,25 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    if (System.getenv().containsKey("IS_CI_JOB")) {
+        compileSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_SDK_VERSION"))
+        buildToolsVersion System.getenv("CI_ANDROID_BUILD_TOOLS_VERSION")
+    } else {
+        compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+        buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    }
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 24
 
         if (System.getenv().containsKey("IS_CI_JOB")) {
+            minSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_MIN_SDK_VERSION"))
+            targetSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_TARGET_SDK_VERSION"))
             buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
             buildConfigField("String", "PUBLIC_KEY", "\"" + System.getenv("CI_PUBLIC_KEY") + "\"")
             buildConfigField("String", "PRIVATE_KEY", "\"" + System.getenv("CI_PRIVATE_KEY") + "\"")
         } else {
+            minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+            targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
             buildConfigField("String", "PRODUCTION_ENDPOINT", "\"${marvelProductionEndpoint}\"")
             buildConfigField("String", "PUBLIC_KEY", "\"${marvelPublicKey}\"")
             buildConfigField("String", "PRIVATE_KEY", "\"${marvelPrivateKey}\"")

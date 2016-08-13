@@ -1,6 +1,7 @@
 language: android
 
 jdk:
+  # Jdk version used by your project
   - oraclejdk8
 
 sudo: false
@@ -51,4 +52,4 @@ script:
   #- ./gradlew core:unitTests
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew mobile:build
+  - ./gradlew mobile:build # as an example
