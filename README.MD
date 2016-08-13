@@ -50,6 +50,10 @@ If you wish to run your own **CI** (I'm using Travis) ensure you have the follow
 * CI_ PRODUCTION_ENDPOINT = http://gateway.marvel.com/v1/public/
 * CI_ PUBLIC_KEY = < YOUR-PUBLIC-KEY >
 * CI_ PRIVATE_KEY = < YOUR-PRIVATE-KEY >
+* CI_ ANDROID_ BUILD_ TARGET_ SDK_VERSION = 24
+* CI_ ANDROID_ BUILD_ MIN_ SDK_VERSION = 17
+* CI_ ANDROID_ BUILD_ TOOLS_VERSION = 24.0.0
+* CI_ ANDROID_ BUILD_ SDK_VERSION = 24
 
 
 To run **locally** have your private and public keys in your **gradle.properties** file (project's root folder).
@@ -57,6 +61,13 @@ To run **locally** have your private and public keys in your **gradle.properties
 * marvelProductionEndpoint = http://gateway.marvel.com/v1/public/
 * marvelPublicKey = < YOUR-PUBLIC-KEY >
 * marvelPrivateKey = < YOUR-PRIVATE-KEY >
+* ANDROID_ BUILD_ TARGET_SDK_VERSION = 24
+* ANDROID_ BUILD_ MIN_SDK_VERSION = 17
+* ANDROID_ BUILD_ TOOLS_VERSION = 24.0.0
+* ANDROID_ BUILD_ SDK_VERSION = 24
+
+Mind the markedown spaces.
+
 
 ## Dependencies
 
