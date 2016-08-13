@@ -1,8 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    if (System.getenv().containsKey("IS_CI_JOB")) {
+        compileSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_SDK_VERSION"))
+        buildToolsVersion System.getenv("CI_ANDROID_BUILD_TOOLS_VERSION")
+    } else {
+        compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+        buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    }
 
     defaultConfig {
 
