@@ -10,7 +10,6 @@ android {
     }
 
     defaultConfig {
-
         if (System.getenv().containsKey("IS_CI_JOB")) {
             minSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_MIN_SDK_VERSION"))
             targetSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_TARGET_SDK_VERSION"))
