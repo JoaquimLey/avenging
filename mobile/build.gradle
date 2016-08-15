@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    publishNonDefault true
     if (System.getenv().containsKey("IS_CI_JOB")) {
         compileSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_SDK_VERSION"))
         buildToolsVersion System.getenv("CI_ANDROID_BUILD_TOOLS_VERSION")
@@ -8,7 +9,6 @@ android {
         compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
         buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
     }
-    publishNonDefault true
 
     defaultConfig {
         if (System.getenv().containsKey("IS_CI_JOB")) {
