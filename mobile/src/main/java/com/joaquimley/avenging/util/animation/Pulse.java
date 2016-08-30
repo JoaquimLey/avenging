@@ -37,13 +37,4 @@ public class Pulse extends AlphaAnimation {
         setRepeatCount(INFINITE);
         setRepeatMode(Animation.REVERSE);
     }
-
-    public Pulse(float fromAlpha, float toAlpha, long duration) {
-        super(fromAlpha, toAlpha);
-        setDuration(duration);
-        setInterpolator(new LinearInterpolator());
-        setRepeatCount(INFINITE);
-        setRepeatMode(Animation.REVERSE);
-    }
-
 }

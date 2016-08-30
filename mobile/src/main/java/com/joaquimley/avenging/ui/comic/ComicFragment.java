@@ -18,6 +18,7 @@ package com.joaquimley.avenging.ui.comic;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -55,14 +56,17 @@ public class ComicFragment extends Fragment implements ViewPager.OnPageChangeLis
     private String mTransactionName;
 
     public static ComicFragment newInstance(List<Comic> comicList, int clickedPosition) {
-        return newInstance(comicList, "", clickedPosition);
+        return newInstance(comicList, null, clickedPosition);
     }
 
-    public static ComicFragment newInstance(List<Comic> comicList, String transactionName, int clickedPosition) {
+    public static ComicFragment newInstance(List<Comic> comicList, @Nullable String transactionName, int clickedPosition) {
         ComicFragment fragment = new ComicFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_CLICKED_POSITION, clickedPosition);
-        args.putString(ARG_TRANSACTION_NAME, transactionName);
+        if (transactionName != null) {
+            args.putString(ARG_TRANSACTION_NAME, transactionName);
+
+        }
         args.putParcelableArrayList(ARG_COMIC_LIST, (ArrayList<Comic>) comicList);
         fragment.setArguments(args);
         setupTransactions(fragment);

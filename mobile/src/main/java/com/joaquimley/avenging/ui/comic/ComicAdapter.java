@@ -16,7 +16,6 @@
 
 package com.joaquimley.avenging.ui.comic;
 
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -48,8 +47,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
     public ComicAdapter(List<Comic> comicList, InteractionListener listener) {
         mComicList = new ArrayList<>();
-        addItems(comicList);
         mListInteractionListener = listener;
+        addItems(comicList);
     }
 
     @Override
@@ -87,44 +86,9 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         return mComicList.get(position);
     }
 
-    public void add(Comic item) {
-        add(null, item);
-    }
-
-    public void add(@Nullable Integer position, Comic item) {
-        if (position != null) {
-            mComicList.add(position, item);
-            notifyItemInserted(position);
-        } else {
-            mComicList.add(item);
-            notifyItemInserted(mComicList.size() - 1);
-        }
-    }
-
     public void addItems(List<Comic> itemsList) {
         mComicList.addAll(itemsList);
         notifyItemRangeInserted(getItemCount(), mComicList.size() - 1);
-    }
-
-    public void remove(int position) {
-        mComicList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void removeItems(List<Integer> itemsPositionsList) {
-        notifyItemRangeInserted(getItemCount(), mComicList.size() - 1);
-        for (int i = 0; i < itemsPositionsList.size(); i++) {
-            remove(itemsPositionsList.get(i));
-        }
-    }
-
-    public void removeAll() {
-        mComicList.clear();
-        notifyDataSetChanged();
-    }
-
-    public List<Comic> getItems() {
-        return mComicList;
     }
 
     /**

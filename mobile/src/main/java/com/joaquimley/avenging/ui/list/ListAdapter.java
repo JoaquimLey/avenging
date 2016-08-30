@@ -20,6 +20,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,9 +54,11 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VIEW_TYPE_GALLERY = 0;
     public static final int VIEW_TYPE_LIST = 1;
     public static final int VIEW_TYPE_LOADING = 2;
+
     @IntDef({VIEW_TYPE_LOADING, VIEW_TYPE_GALLERY, VIEW_TYPE_LIST})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ViewType {}
+    public @interface ViewType {
+    }
 
     @ViewType
     private int mViewType;
@@ -118,19 +121,15 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void onBindGenericItemViewHolder(final CharacterViewHolder holder, int position) {
         holder.name.setText(mCharacterList.get(position).getName());
-        Picasso.with(holder.listItem.getContext())
-                .load(mCharacterList.get(position).getImageUrl())
-                .centerCrop()
-                .fit()
-                .into(holder.image);
-    }
 
-    public CharacterMarvel getItem(int position) {
-        if (mCharacterList.size() < position) {
-            Log.d(TAG, "Character position is invalid");
-            return null;
+        String characterImageUrl = mCharacterList.get(position).getImageUrl();
+        if (!TextUtils.isEmpty(characterImageUrl)) {
+            Picasso.with(holder.listItem.getContext())
+                    .load(characterImageUrl)
+                    .centerCrop()
+                    .fit()
+                    .into(holder.image);
         }
-        return mCharacterList.get(position);
     }
 
     public void add(CharacterMarvel item) {

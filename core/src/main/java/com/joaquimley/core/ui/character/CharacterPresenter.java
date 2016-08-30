@@ -21,9 +21,9 @@ import com.joaquimley.core.data.MarvelDataManager;
 import com.joaquimley.core.data.model.CharacterDataWrapper;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.ComicDataWrapper;
-import com.joaquimley.core.data.network.RequestWatcher;
 import com.joaquimley.core.ui.base.BasePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,7 +35,6 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
     private static final int SINGLE_ITEM_INDEX = 0;
 
     private final MarvelDataManager mDataManager;
-    private RequestWatcher mRequestWatcher;
 
     private List<Comic> mComicList;
     private List<Comic> mSeriesList;
@@ -44,33 +43,24 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
 
     public CharacterPresenter() {
         mDataManager = new MarvelDataManager(AvengingApplication.getInstance().getMarvelService());
-        initItems();
-    }
-
-    public CharacterPresenter(MarvelDataManager dataManager) {
-        mDataManager = dataManager;
-        initItems();
-    }
-
-    private void initItems() {
-        mRequestWatcher = new RequestWatcher();
+        mComicList  = new ArrayList<>();
+        mSeriesList = new ArrayList<>();
+        mStoriesList = new ArrayList<>();
+        mEventsList = new ArrayList<>();
     }
 
     @Override
     public void detachView() {
+        mComicList = null;
+        mSeriesList = null;
+        mStoriesList = null;
+        mEventsList = null;
         super.detachView();
-        if (mRequestWatcher != null) {
-            mRequestWatcher.detach();
-        }
-        mRequestWatcher = null;
     }
 
     public void getCharacter(long id) {
         checkViewAttached();
         final Call<CharacterDataWrapper> request = mDataManager.getCharacter(id);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
         getPresenterView().showMessageLayout(false);
         getPresenterView().showProgress();
         request.enqueue(new Callback<CharacterDataWrapper>() {
@@ -116,9 +106,6 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
         }
 
         final Call<ComicDataWrapper> request = mDataManager.getComics(id, offset, limit);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
 
         request.enqueue(new Callback<ComicDataWrapper>() {
             @Override
@@ -163,9 +150,6 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
         }
 
         final Call<ComicDataWrapper> request = mDataManager.getSeries(id, offset, limit);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
 
         request.enqueue(new Callback<ComicDataWrapper>() {
             @Override
@@ -210,14 +194,10 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
         }
 
         final Call<ComicDataWrapper> request = mDataManager.getStories(id, offset, limit);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
 
         request.enqueue(new Callback<ComicDataWrapper>() {
             @Override
             public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                mRequestWatcher.unsubscribe(request);
                 switch (response.code()) {
                     case 200:
                         mStoriesList = response.body().getData().getResults();
@@ -258,14 +238,10 @@ public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
         }
 
         final Call<ComicDataWrapper> request = mDataManager.getEvents(id, offset, limit);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
 
         request.enqueue(new Callback<ComicDataWrapper>() {
             @Override
             public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                mRequestWatcher.unsubscribe(request);
                 switch (response.code()) {
                     case 200:
                         mEventsList = response.body().getData().getResults();
