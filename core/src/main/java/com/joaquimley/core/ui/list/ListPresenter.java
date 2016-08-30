@@ -1,10 +1,25 @@
+/*
+ * Copyright (c) Joaquim Ley 2016. All Rights Reserved.
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.joaquimley.core.ui.list;
 
 import com.joaquimley.core.AvengingApplication;
 import com.joaquimley.core.data.MarvelDataManager;
 import com.joaquimley.core.data.model.CharacterDataWrapper;
 import com.joaquimley.core.data.model.CharacterMarvel;
-import com.joaquimley.core.data.network.RequestWatcher;
 import com.joaquimley.core.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -20,7 +35,6 @@ public class ListPresenter extends BasePresenter<ListPresenterView> {
     private static final int ITEM_REQUEST_LIMIT = 6;
 
     private final MarvelDataManager mDataManager;
-    private RequestWatcher mRequestWatcher;
     private List<CharacterMarvel> mCharacterList;
 
     public ListPresenter() {
@@ -34,17 +48,12 @@ public class ListPresenter extends BasePresenter<ListPresenterView> {
     }
 
     private void initItems() {
-        mRequestWatcher = new RequestWatcher();
         mCharacterList = new ArrayList<>();
     }
 
     @Override
     public void detachView() {
         super.detachView();
-        if (mRequestWatcher != null) {
-            mRequestWatcher.detach();
-        }
-        mRequestWatcher = null;
         mCharacterList = null;
     }
 
@@ -81,9 +90,6 @@ public class ListPresenter extends BasePresenter<ListPresenterView> {
         }
 
         final Call<CharacterDataWrapper> request = mDataManager.getCharactersList(offSet, limit, queryString);
-        if (!mRequestWatcher.subscribe(request)) {
-            return;
-        }
 
         if (!isLoadMore) {
             getPresenterView().showProgress();
@@ -92,10 +98,9 @@ public class ListPresenter extends BasePresenter<ListPresenterView> {
         request.enqueue(new Callback<CharacterDataWrapper>() {
             @Override
             public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
-                mRequestWatcher.unsubscribe(request);
+                getPresenterView().hideProgress();
                 switch (response.code()) {
                     case 200:
-                        getPresenterView().hideProgress();
                         mCharacterList.addAll(response.body().getData().getResults());
                         if (mCharacterList.isEmpty()) {
                             getPresenterView().showEmpty();
@@ -110,14 +115,12 @@ public class ListPresenter extends BasePresenter<ListPresenterView> {
                         break;
 
                     default:
-                        getPresenterView().hideProgress();
                         getPresenterView().showError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<CharacterDataWrapper> call, Throwable t) {
-                mRequestWatcher.unsubscribe(request);
                 getPresenterView().hideProgress();
                 getPresenterView().showError(t.getMessage());
             }
