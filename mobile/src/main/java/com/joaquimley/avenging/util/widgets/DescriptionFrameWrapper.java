@@ -36,16 +36,6 @@ public class DescriptionFrameWrapper extends LinearLayout {
         init(context);
     }
 
-    public DescriptionFrameWrapper(Context context, @Nullable String description) {
-        super(context);
-        init(context);
-
-        mTitle.setText(context.getResources().getString(R.string.description));
-        if (description != null && !description.isEmpty()) {
-            mDescription.setText(description);
-        }
-    }
-
     public DescriptionFrameWrapper(Context context, @Nullable String title, @Nullable String description) {
         super(context);
         init(context);

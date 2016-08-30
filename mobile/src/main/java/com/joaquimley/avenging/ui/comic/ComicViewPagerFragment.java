@@ -19,6 +19,7 @@ package com.joaquimley.avenging.ui.comic;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,18 +66,19 @@ public class ComicViewPagerFragment extends Fragment {
         if (container == null) {
             return null;
         }
+
         View view = inflater.inflate(R.layout.fragment_comic_view_pager, container, false);
         ((TextView) view.findViewById(R.id.tv_title)).setText(mComic.getName());
 
         String imageUrl = mComic.getThumbnailUrl();
-        if (imageUrl.isEmpty()) {
+        if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(getContext())
-                    .load(R.drawable.ic_error_list)
+                    .load(imageUrl)
                     .into(((ImageView) view.findViewById(R.id.iv_image)));
         } else {
             // TODO: 24/07/16 Get a more appropriate error resource
             Picasso.with(getContext())
-                    .load(imageUrl)
+                    .load(R.drawable.ic_error_list)
                     .into(((ImageView) view.findViewById(R.id.iv_image)));
         }
         return view;

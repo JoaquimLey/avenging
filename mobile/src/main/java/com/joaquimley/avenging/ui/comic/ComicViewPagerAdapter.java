@@ -32,7 +32,9 @@ public class ComicViewPagerAdapter extends FragmentStatePagerAdapter {
     public ComicViewPagerAdapter(FragmentManager fragmentManager, List<Comic> comicList) {
         super(fragmentManager);
         mComicList = new ArrayList<>();
-        mComicList.addAll(comicList);
+        if(comicList != null) {
+            mComicList.addAll(comicList);
+        }
     }
 
     @Override

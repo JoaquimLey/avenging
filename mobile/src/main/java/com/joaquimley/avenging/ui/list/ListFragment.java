@@ -97,7 +97,6 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        mActivity = (AppCompatActivity) getActivity();
         mListPresenter = new ListPresenter();
         mListCharacterAdapter = new ListAdapter();
     }
@@ -117,9 +116,8 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
     }
 
     private void initViews(View view) {
+        mActivity = (AppCompatActivity) getActivity();
         mActivity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-
-        mContentLoadingProgress = (ProgressBar) view.findViewById(R.id.progress);
 
         mCharactersRecycler = (RecyclerView) view.findViewById(R.id.recycler_characters);
         mCharactersRecycler.setHasFixedSize(true);
@@ -137,6 +135,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+        mContentLoadingProgress = (ProgressBar) view.findViewById(R.id.progress);
         mMessageLayout = view.findViewById(R.id.message_layout);
         mMessageImage = (ImageView) view.findViewById(R.id.iv_message);
         mMessageText = (TextView) view.findViewById(R.id.tv_message);

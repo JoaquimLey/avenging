@@ -33,12 +33,15 @@ import java.util.List;
 
 public class ListAdapter extends GridPagerAdapter {
 
+    public static final int COLUMN_COUNT = 1;
+
     private final Context mContext;
-    private final List<CharacterMarvel> mCharacterList = new ArrayList<>();
+    private final List<CharacterMarvel> mCharacterList;
     private InteractionListener mListInteractionListener;
 
     public ListAdapter(Context context) {
         mContext = context;
+        mCharacterList = new ArrayList<>();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class ListAdapter extends GridPagerAdapter {
 
     @Override
     public int getColumnCount(int i) {
-        return 1;
+        return COLUMN_COUNT;
     }
 
     @Override
