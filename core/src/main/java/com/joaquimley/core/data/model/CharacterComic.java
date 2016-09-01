@@ -30,10 +30,6 @@ public class CharacterComic {
     public CharacterComic() {
     }
 
-    public int getIdFromResourceUri() {
-        return mResourceUri != null ? Integer.parseInt(mResourceUri.substring(mResourceUri.lastIndexOf("/") + 1)) : -1;
-    }
-
     public String getResourceUri() {
         return mResourceUri;
     }
