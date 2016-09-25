@@ -3,14 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion project.buildToolsVersion
-    publishNonDefault true
 
     defaultConfig {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.1"
     }
 
     buildTypes {

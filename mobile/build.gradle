@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    publishNonDefault true
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion project.buildToolsVersion
 
@@ -9,8 +8,8 @@ android {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.1"
     }
 
     lintOptions {

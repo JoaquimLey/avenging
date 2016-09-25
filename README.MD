@@ -44,7 +44,7 @@ This sample is available
 [![Get it on Google Play](../development/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.joaquimley.avenging)
 
 ## Configs & API authentication
-If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables:
+If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables on **your CI config**:
 
 * IS_ CI_JOB = true
 * CI_ PRODUCTION_ENDPOINT = http://gateway.marvel.com/v1/public/

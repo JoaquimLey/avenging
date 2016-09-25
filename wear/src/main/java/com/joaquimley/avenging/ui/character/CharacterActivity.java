@@ -85,45 +85,45 @@ public class CharacterActivity extends Activity implements CharacterContract.Cha
     @Override
     public void showCharacter(CharacterMarvel character) {
         mCharacter = character;
-        if (mDescriptionWrapper == null && !mCharacter.getDescription().isEmpty()) {
-            mDescriptionWrapper = new DescriptionFrameWrapper(mActivity,
-                    mActivity.getResources().getString(R.string.description),
-                    mCharacter.getDescription());
-            mContentFrame.addView(mDescriptionWrapper);
-        }
-
-        List<Comic> characterComics = character.getComics().getItems();
-        if (!characterComics.isEmpty()) {
-            mComicWrapper = new ComicFrameWrapper(mActivity, getString(R.string.comics), characterComics, this);
-            mContentFrame.addView(mComicWrapper);
-            mCharacterPresenter.onCharacterComicsRequested(character.getId(), characterComics.size());
-        }
-
-        List<Comic> characterSeries = character.getSeries().getItems();
-        if (!characterSeries.isEmpty()) {
-            mSeriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.series), characterSeries, this);
-            mContentFrame.addView(mSeriesWrapper);
-            mCharacterPresenter.onCharacterSeriesRequested(character.getId(), characterSeries.size());
-        }
-
-        List<Comic> characterStories = character.getStories().getItems();
-        if (!characterStories.isEmpty()) {
-            mStoriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.stories), characterStories, this);
-            mContentFrame.addView(mStoriesWrapper);
-            mCharacterPresenter.onCharacterStoriesRequested(character.getId(), characterStories.size());
-        }
-
-        List<Comic> characterEvents = character.getEvents().getItems();
-        if (!characterEvents.isEmpty()) {
-            mEventsWrapper = new ComicFrameWrapper(mActivity, getString(R.string.events), characterEvents, this);
-            mContentFrame.addView(mEventsWrapper);
-            mCharacterPresenter.onCharacterEventsRequested(character.getId(), characterEvents.size());
-        }
-
-        if (!character.getUrls().isEmpty()) {
-            mContentFrame.addView(new UrlFrameWrapper(mActivity,
-                    mActivity.getResources().getString(R.string.related_links), character.getUrls()));
-        }
+//        if (mDescriptionWrapper == null && !mCharacter.getDescription().isEmpty()) {
+//            mDescriptionWrapper = new DescriptionFrameWrapper(mActivity,
+//                    mActivity.getResources().getString(R.string.description),
+//                    mCharacter.getDescription());
+//            mContentFrame.addView(mDescriptionWrapper);
+//        }
+//
+//        List<Comic> characterComics = character.getComics().getItems();
+//        if (!characterComics.isEmpty()) {
+//            mComicWrapper = new ComicFrameWrapper(mActivity, getString(R.string.comics), characterComics, this);
+//            mContentFrame.addView(mComicWrapper);
+//            mCharacterPresenter.onCharacterComicsRequested(character.getId(), characterComics.size());
+//        }
+//
+//        List<Comic> characterSeries = character.getSeries().getItems();
+//        if (!characterSeries.isEmpty()) {
+//            mSeriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.series), characterSeries, this);
+//            mContentFrame.addView(mSeriesWrapper);
+//            mCharacterPresenter.onCharacterSeriesRequested(character.getId(), characterSeries.size());
+//        }
+//
+//        List<Comic> characterStories = character.getStories().getItems();
+//        if (!characterStories.isEmpty()) {
+//            mStoriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.stories), characterStories, this);
+//            mContentFrame.addView(mStoriesWrapper);
+//            mCharacterPresenter.onCharacterStoriesRequested(character.getId(), characterStories.size());
+//        }
+//
+//        List<Comic> characterEvents = character.getEvents().getItems();
+//        if (!characterEvents.isEmpty()) {
+//            mEventsWrapper = new ComicFrameWrapper(mActivity, getString(R.string.events), characterEvents, this);
+//            mContentFrame.addView(mEventsWrapper);
+//            mCharacterPresenter.onCharacterEventsRequested(character.getId(), characterEvents.size());
+//        }
+//
+//        if (!character.getUrls().isEmpty()) {
+//            mContentFrame.addView(new UrlFrameWrapper(mActivity,
+//                    mActivity.getResources().getString(R.string.related_links), character.getUrls()));
+//        }
         // TODO: 04/08/16 see wear module
     }
 
