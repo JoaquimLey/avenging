@@ -30,15 +30,14 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class MarvelServiceFactory {
 
+    private static final int HTTP_READ_TIMEOUT = 10000;
+    private static final int HTTP_CONNECT_TIMEOUT = 6000;
+
     public static MarvelService makeMarvelService() {
-        return makeMarvelService(makeOkHttpClient(false));
+        return makeMarvelService(makeOkHttpClient());
     }
 
-    public static MarvelService makeMarvelService(boolean withLoggingInterceptor) {
-        return makeMarvelService(makeOkHttpClient(withLoggingInterceptor));
-    }
-
-    public static MarvelService makeMarvelService(OkHttpClient okHttpClient) {
+    private static MarvelService makeMarvelService(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.PRODUCTION_ENDPOINT)
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -48,20 +47,18 @@ public class MarvelServiceFactory {
         return retrofit.create(MarvelService.class);
     }
 
-    public static OkHttpClient makeOkHttpClient(boolean withLoggingInterceptor) {
+    private static OkHttpClient makeOkHttpClient() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder();
-        httpClientBuilder.connectTimeout(MarvelServiceConfig.HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS);
-        httpClientBuilder.readTimeout(MarvelServiceConfig.HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
-        if(withLoggingInterceptor) {
-            httpClientBuilder.addInterceptor(makeLoggingInterceptor());
-        }
+        httpClientBuilder.connectTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder.readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
+        httpClientBuilder.addInterceptor(makeLoggingInterceptor());
         return httpClientBuilder.build();
     }
 
-    public static HttpLoggingInterceptor makeLoggingInterceptor() {
+    private static HttpLoggingInterceptor makeLoggingInterceptor() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
+                : HttpLoggingInterceptor.Level.NONE);
         return logging;
     }
 }

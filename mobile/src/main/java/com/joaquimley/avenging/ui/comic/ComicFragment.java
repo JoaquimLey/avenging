@@ -41,19 +41,20 @@ import java.util.List;
  */
 public class ComicFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
-    public static final String TAG = ComicFragment.class.getSimpleName();
+    public static final String TAG = "ComicFragment";
 
     private static final String ARG_COMIC_LIST = "argComicList";
     private static final String ARG_CLICKED_POSITION = "argClickedPosition";
     private static final String ARG_TRANSACTION_NAME = "argTransactionName";
     private static final int VIEW_PAGER_OFF_SCREEN_LIMIT = 2;
 
-    private AppCompatActivity mActivity;
-    private TextView mPageCounter;
-    private List<Comic> mComicList;
-    private ComicViewPagerAdapter mViewPagerAdapter;
     private int mClickedPosition;
     private String mTransactionName;
+    private List<Comic> mComicList;
+    private ComicViewPagerAdapter mViewPagerAdapter;
+
+    private AppCompatActivity mActivity;
+    private TextView mPageCounter;
 
     public static ComicFragment newInstance(List<Comic> comicList, int clickedPosition) {
         return newInstance(comicList, null, clickedPosition);

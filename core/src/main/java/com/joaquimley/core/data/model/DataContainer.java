@@ -17,48 +17,23 @@
 package com.joaquimley.core.data.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ComicDataContainer extends BaseDataContainer {
+public class DataContainer<T> {
 
-    @JsonProperty("code")
-    protected int mCode;
-    @JsonProperty("code")
-    protected String mStatus;
+    @JsonProperty("offset")
+    protected Integer mOffset;
+    @JsonProperty("limit")
+    protected Integer mLimit;
+    @JsonProperty("total")
+    protected Integer mTotal;
+    @JsonProperty("count")
+    protected Integer mCount;
     @JsonProperty("results")
-    private List<Comic> mResults = new ArrayList<>();
+    protected T mResults;
 
-    public ComicDataContainer() {
-    }
-
-    public int getCode() {
-        return mCode;
-    }
-
-    public void setCode(int code) {
-        mCode = code;
-    }
-
-    public String getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(String status) {
-        mStatus = status;
-    }
-
-    public List<Comic> getResults() {
-        return mResults;
-    }
-
-    public void setResults(List<Comic> results) {
-        mResults = results;
+    public DataContainer() {
     }
 
     public Integer getOffset() {
@@ -91,5 +66,14 @@ public class ComicDataContainer extends BaseDataContainer {
 
     public void setCount(Integer count) {
         mCount = count;
+    }
+
+
+    public T getResults() {
+        return mResults;
+    }
+
+    public void setResults(T results) {
+        mResults = results;
     }
 }

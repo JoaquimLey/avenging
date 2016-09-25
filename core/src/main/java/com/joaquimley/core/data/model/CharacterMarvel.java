@@ -143,6 +143,19 @@ public class CharacterMarvel implements Parcelable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CharacterMarvel)) return false;
+        CharacterMarvel that = (CharacterMarvel) o;
+        return mId == that.mId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (mId ^ (mId >>> 32));
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

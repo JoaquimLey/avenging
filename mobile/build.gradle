@@ -2,24 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     publishNonDefault true
-    if (System.getenv().containsKey("IS_CI_JOB")) {
-        compileSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_SDK_VERSION"))
-        buildToolsVersion System.getenv("CI_ANDROID_BUILD_TOOLS_VERSION")
-    } else {
-        compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
-        buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
-    }
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
-        if (System.getenv().containsKey("IS_CI_JOB")) {
-            minSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_MIN_SDK_VERSION"))
-            targetSdkVersion Integer.parseInt(System.getenv("CI_ANDROID_BUILD_TARGET_SDK_VERSION"))
-        } else {
-            minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
-            targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
-        }
-
         applicationId "com.joaquimley.avenging"
+        minSdkVersion 11
+        targetSdkVersion 24
         versionCode 3
         versionName "1.0"
     }
@@ -40,18 +29,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
-    final SUPPORT_LIBRARY_VERSION = '24.2.0'
-    final PICASSO_VERSION = '2.5.2'
-//    final ESPRESSO_VERSION = '2.2.1'
-
-    compile project(':core')
-    compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
-    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
+    debugCompile project(path: ':core', configuration: 'debug')
+    releaseCompile project(path: ':core', configuration: 'release')
+    compile "com.android.support:design:$supportLibraryVersion"
+    compile "com.squareup.picasso:picasso:$picassoVersion"
     // Functional tests dependencies
-//    androidTestCompile ("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION") {
+//    androidTestCompile ("com.android.support.test.espresso:espresso-core:$espressoVersion") {
 //        transitive = false;
 //    }
 }

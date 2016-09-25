@@ -16,6 +16,7 @@
 
 package com.joaquimley.avenging.ui.list;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.GridViewPager;
 import android.view.View;
@@ -25,10 +26,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.joaquimley.avenging.R;
-import com.joaquimley.avenging.ui.base.BaseActivity;
+import com.joaquimley.avenging.ui.character.CharacterActivity;
 import com.joaquimley.core.data.model.CharacterMarvel;
+import com.joaquimley.core.ui.list.ListContract;
 import com.joaquimley.core.ui.list.ListPresenter;
-import com.joaquimley.core.ui.list.ListPresenterView;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ import java.util.List;
  * You can view more implementations of a list (as viewable on README.MD), this can be found
  * on the "deprecated/wear/list" folder.
  */
-public class ListActivity extends BaseActivity implements ListPresenterView,
+public class ListActivity extends Activity implements ListContract.ListView,
         ListAdapter.InteractionListener, GridViewPager.OnPageChangeListener {
 
     private ListPresenter mListPresenter;
@@ -56,13 +57,13 @@ public class ListActivity extends BaseActivity implements ListPresenterView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_pager_list);
         mListPresenter = (ListPresenter) getLastNonConfigurationInstance();
-        if(mListPresenter == null) {
+        if (mListPresenter == null) {
             mListPresenter = new ListPresenter();
         }
         mListPresenter.attachView(this);
 
         initViews();
-        mListPresenter.getCharacters();
+        mListPresenter.onInitialListRequested();
     }
 
     @Override
@@ -87,14 +88,14 @@ public class ListActivity extends BaseActivity implements ListPresenterView,
             @Override
             public void onClick(View view) {
                 mGridPagerAdapter.removeAll();
-                mListPresenter.getCharacters();
+                mListPresenter.onInitialListRequested();
             }
         });
     }
 
     @Override
     public void onListClick(CharacterMarvel character) {
-        //TODO: startActivity(CharacterActivity.newStartIntent(this, character)); on 1.1
+        CharacterActivity.newStartIntent(this, character);
     }
 
     @Override
@@ -115,6 +116,14 @@ public class ListActivity extends BaseActivity implements ListPresenterView,
     @Override
     public void hideProgress() {
         mContentLoadingProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUnauthorizedError() {
+        mMessageImage.setImageResource(R.drawable.ic_error_list);
+        mMessageText.setText(getString(R.string.error_generic_server_error, "Unauthorized"));
+        mMessageButton.setText(getString(R.string.action_try_again));
+        showMessageLayout(true);
     }
 
     @Override
@@ -146,14 +155,12 @@ public class ListActivity extends BaseActivity implements ListPresenterView,
 
     @Override
     public void onPageSelected(int i, int i1) {
-        if(mGridPagerAdapter.getRowCount() == i + 2) {
-            // onLoadMore()
-            mListPresenter.getCharacters(mGridPagerAdapter.getRowCount(), true);
+        if (mGridPagerAdapter.getRowCount() == i + 2) {
+            mListPresenter.onListEndReached(mGridPagerAdapter.getRowCount(), null, null);
         }
     }
 
     @Override
     public void onPageScrollStateChanged(int i) {
-
     }
 }

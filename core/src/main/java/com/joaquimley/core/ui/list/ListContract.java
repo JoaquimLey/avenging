@@ -14,26 +14,30 @@
  * limitations under the License.
  */
 
-package com.joaquimley.core.data.model;
+package com.joaquimley.core.ui.list;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.joaquimley.core.ui.base.RemoteView;
+import com.joaquimley.core.data.model.CharacterMarvel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterDataContainer extends BaseDataContainer {
+public interface ListContract {
 
-    @JsonProperty("results")
-    public List<CharacterMarvel> mResults = new ArrayList<>();
+    interface ViewActions {
+        void onInitialListRequested();
 
-    public CharacterDataContainer() {
+        void onListEndReached(Integer offset, Integer limit, String searchQuery);
+
+        void onCharacterSearched(String searchQuery);
     }
 
-    public List<CharacterMarvel> getResults() {
-        return mResults;
+    interface ListView extends RemoteView {
+
+        void showCharacters(List<CharacterMarvel> characterList);
+
+        void showSearchedCharacters(List<CharacterMarvel> characterList);
+
     }
 
-    public void setResults(List<CharacterMarvel> results) {
-        mResults = results;
-    }
+
 }

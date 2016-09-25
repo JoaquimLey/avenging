@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
     publishNonDefault true
 
     defaultConfig {
@@ -22,12 +22,13 @@ android {
 }
 
 dependencies {
-    final PICASSO_VERSION = '2.5.2'
-    final PLAY_SERVICES_WEARABLE_VERSION = '9.4.0'
+    debugCompile project(path: ':core', configuration: 'debug')
+    releaseCompile project(path: ':core', configuration: 'release')
+
+    final PLAY_SERVICES_WEARABLE_VERSION = '9.6.0'
     final SUPPORT_WEARABLE_VERSION = '2.0.0-alpha1'
 
-    compile project(':core')
-    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
+    compile "com.squareup.picasso:picasso:$picassoVersion"
     compile "com.google.android.support:wearable:$SUPPORT_WEARABLE_VERSION"
     compile "com.google.android.gms:play-services-wearable:$PLAY_SERVICES_WEARABLE_VERSION"
 }

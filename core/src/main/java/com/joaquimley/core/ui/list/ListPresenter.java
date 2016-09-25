@@ -16,114 +16,72 @@
 
 package com.joaquimley.core.ui.list;
 
-import com.joaquimley.core.AvengingApplication;
-import com.joaquimley.core.data.MarvelDataManager;
-import com.joaquimley.core.data.model.CharacterDataWrapper;
-import com.joaquimley.core.data.model.CharacterMarvel;
-import com.joaquimley.core.ui.base.BasePresenter;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
-import java.util.ArrayList;
+import com.joaquimley.core.data.DataManager;
+import com.joaquimley.core.data.model.CharacterMarvel;
+import com.joaquimley.core.data.model.DataWrapper;
+import com.joaquimley.core.ui.base.BasePresenter;
+import com.joaquimley.core.ui.base.RemoteCallback;
+
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class ListPresenter extends BasePresenter<ListPresenterView> {
+public class ListPresenter extends BasePresenter<ListContract.ListView> implements ListContract.ViewActions {
 
     private static final int ITEM_REQUEST_INITIAL_OFFSET = 0;
     private static final int ITEM_REQUEST_LIMIT = 6;
 
-    private final MarvelDataManager mDataManager;
-    private List<CharacterMarvel> mCharacterList;
+//    private List<CharacterMarvel> mCharacterList;
 
-    public ListPresenter() {
-        mDataManager = new MarvelDataManager(AvengingApplication.getInstance().getMarvelService());
-        initItems();
-    }
-
-    public ListPresenter(MarvelDataManager dataManager) {
-        mDataManager = dataManager;
-        initItems();
-    }
-
-    private void initItems() {
-        mCharacterList = new ArrayList<>();
+    @Override
+    public void onInitialListRequested() {
+        getCharacters(ITEM_REQUEST_INITIAL_OFFSET, ITEM_REQUEST_LIMIT, null);
     }
 
     @Override
-    public void detachView() {
-        super.detachView();
-        mCharacterList = null;
+    public void onListEndReached(Integer offset, @Nullable Integer limit, String searchQuery) {
+        getCharacters(offset, limit == null ? ITEM_REQUEST_LIMIT : limit, searchQuery);
     }
 
-    public void getCharacters() {
-        getCharacters(ITEM_REQUEST_INITIAL_OFFSET, ITEM_REQUEST_LIMIT, false, null);
+    @Override
+    public void onCharacterSearched(String searchQuery) {
+        getCharacters(ITEM_REQUEST_INITIAL_OFFSET, ITEM_REQUEST_LIMIT, searchQuery);
     }
 
-    public void getCharacters(String query) {
-        getCharacters(ITEM_REQUEST_INITIAL_OFFSET, ITEM_REQUEST_LIMIT, false, query);
-    }
-
-    public void getCharacters(Integer offSet, Boolean isLoadMore) {
-        getCharacters(offSet, ITEM_REQUEST_LIMIT, isLoadMore, null);
-    }
-
-    public void getCharacters(Integer offSet, Boolean isLoadMore, String query) {
-        getCharacters(offSet, ITEM_REQUEST_LIMIT, isLoadMore, query == null || query.isEmpty() ? null : query);
-    }
-
-    public void getCharacters(Integer offSet, Integer limit, Boolean isLoadMore, final String queryString) {
-        checkViewAttached();
-        getPresenterView().showMessageLayout(false);
-
-        /**
-         * Initial request or "refresh" action, reset all states
-         */
-        if (offSet == ITEM_REQUEST_INITIAL_OFFSET) {
-            mCharacterList = new ArrayList<>();
-        }
-
-        if (mCharacterList != null && !mCharacterList.isEmpty() && mCharacterList.size() >= offSet + 1) {
-            getPresenterView().showCharacters(mCharacterList);
-            return;
-        }
-
-        final Call<CharacterDataWrapper> request = mDataManager.getCharactersList(offSet, limit, queryString);
-
-        if (!isLoadMore) {
-            getPresenterView().showProgress();
-        }
-
-        request.enqueue(new Callback<CharacterDataWrapper>() {
-            @Override
-            public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
-                getPresenterView().hideProgress();
-                switch (response.code()) {
-                    case 200:
-                        mCharacterList.addAll(response.body().getData().getResults());
-                        if (mCharacterList.isEmpty()) {
-                            getPresenterView().showEmpty();
+    private void getCharacters(Integer offset, Integer limit, final String searchQuery) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        mView.showProgress();
+        DataManager.getInstance().getCharactersList(offset, limit, searchQuery,
+                new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
+                    @Override
+                    public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
+                        mView.hideProgress();
+                        List<CharacterMarvel> responseResults = response.getData().getResults();
+                        if (responseResults.isEmpty()) {
+                            mView.showEmpty();
                             return;
                         }
 
-                        if(queryString != null && !queryString.isEmpty()) {
-                            getPresenterView().showSearchedCharacters(response.body().getData().getResults());
-                            return;
+                        if (TextUtils.isEmpty(searchQuery)) {
+                            mView.showCharacters(responseResults);
+                        } else {
+                            mView.showSearchedCharacters(responseResults);
                         }
-                        getPresenterView().showCharacters(response.body().getData().getResults());
-                        break;
+                    }
 
-                    default:
-                        getPresenterView().showError(response.message());
-                }
-            }
+                    @Override
+                    public void onUnauthorized() {
+                        mView.hideProgress();
+                        mView.showUnauthorizedError();
+                    }
 
-            @Override
-            public void onFailure(Call<CharacterDataWrapper> call, Throwable t) {
-                getPresenterView().hideProgress();
-                getPresenterView().showError(t.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailed(Throwable throwable) {
+                        mView.hideProgress();
+                        mView.showError(throwable.getMessage());
+                    }
+                });
     }
 }

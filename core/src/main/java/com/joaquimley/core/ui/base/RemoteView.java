@@ -16,16 +16,17 @@
 
 package com.joaquimley.core.ui.base;
 
-public interface RemotePresenterView extends BasePresenterView {
+public interface RemoteView {
 
     void showProgress();
 
     void hideProgress();
 
-    void showError(String errorMessage);
+    void showUnauthorizedError();
 
     void showEmpty();
 
-    void showMessageLayout(boolean show);
+    void showError(String errorMessage);
 
+    void showMessageLayout(boolean show);
 }
