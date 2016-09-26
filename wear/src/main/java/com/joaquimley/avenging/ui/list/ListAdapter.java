@@ -100,7 +100,7 @@ public class ListAdapter extends GridPagerAdapter {
             name = (TextView) listItem.findViewById(R.id.tv_name);
         }
 
-        void bind(final CharacterMarvel character) {
+        private void bind(final CharacterMarvel character) {
             name.setText(character.getName());
             Picasso.with(mContext).load(character.getImageUrl()).into(image);
             listItem.setOnClickListener(new View.OnClickListener() {

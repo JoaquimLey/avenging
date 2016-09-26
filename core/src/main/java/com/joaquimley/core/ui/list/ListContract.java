@@ -16,14 +16,28 @@
 
 package com.joaquimley.core.ui.list;
 
+import com.joaquimley.core.ui.base.RemoteView;
 import com.joaquimley.core.data.model.CharacterMarvel;
-import com.joaquimley.core.ui.base.RemotePresenterView;
 
 import java.util.List;
 
-public interface ListPresenterView extends RemotePresenterView {
+public interface ListContract {
 
-    void showCharacters(List<CharacterMarvel> characterList);
+    interface ViewActions {
+        void onInitialListRequested();
 
-    void showSearchedCharacters(List<CharacterMarvel> characterList);
+        void onListEndReached(Integer offset, Integer limit, String searchQuery);
+
+        void onCharacterSearched(String searchQuery);
+    }
+
+    interface ListView extends RemoteView {
+
+        void showCharacters(List<CharacterMarvel> characterList);
+
+        void showSearchedCharacters(List<CharacterMarvel> characterList);
+
+    }
+
+
 }

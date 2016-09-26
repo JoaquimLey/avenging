@@ -16,23 +16,37 @@
 
 package com.joaquimley.core.ui.character;
 
+import com.joaquimley.core.ui.base.RemoteView;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
-import com.joaquimley.core.ui.base.RemotePresenterView;
 
 import java.util.List;
 
-public interface CharacterPresenterView extends RemotePresenterView {
+public interface CharacterContract extends RemoteView {
 
-    void showCharacter(CharacterMarvel character);
+    interface ViewActions {
 
-    void showComicList(List<Comic> comicList);
+        void onCharacterRequested(Long characterId);
 
-    void showSeriesList(List<Comic> seriesList);
+        void onCharacterComicsRequested(Long characterId, int limit);
 
-    void showStoriesList(List<Comic> storiesList);
+        void onCharacterSeriesRequested(Long characterId, int limit);
 
-    void showEventsList(List<Comic> eventsList);
+        void onCharacterStoriesRequested(Long characterId, int limit);
 
-    void showError(String message);
+        void onCharacterEventsRequested(Long characterId, int limit);
+    }
+
+    interface CharacterView extends RemoteView {
+
+        void showCharacter(CharacterMarvel character);
+
+        void showComicList(List<Comic> comicList);
+
+        void showSeriesList(List<Comic> seriesList);
+
+        void showStoriesList(List<Comic> storiesList);
+
+        void showEventsList(List<Comic> eventsList);
+    }
 }

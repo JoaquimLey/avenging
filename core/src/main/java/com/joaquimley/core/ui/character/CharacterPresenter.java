@@ -16,252 +16,200 @@
 
 package com.joaquimley.core.ui.character;
 
-import com.joaquimley.core.AvengingApplication;
-import com.joaquimley.core.data.MarvelDataManager;
-import com.joaquimley.core.data.model.CharacterDataWrapper;
+import com.joaquimley.core.data.DataManager;
+import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
-import com.joaquimley.core.data.model.ComicDataWrapper;
+import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.ui.base.BasePresenter;
+import com.joaquimley.core.ui.base.RemoteCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class CharacterPresenter extends BasePresenter<CharacterPresenterView> {
+public class CharacterPresenter extends BasePresenter<CharacterContract.CharacterView> implements
+        CharacterContract.ViewActions {
 
     private static final int SINGLE_ITEM_INDEX = 0;
 
-    private final MarvelDataManager mDataManager;
-
+    private CharacterMarvel mCharacter;
     private List<Comic> mComicList;
     private List<Comic> mSeriesList;
     private List<Comic> mStoriesList;
     private List<Comic> mEventsList;
 
     public CharacterPresenter() {
-        mDataManager = new MarvelDataManager(AvengingApplication.getInstance().getMarvelService());
-        mComicList  = new ArrayList<>();
+        mComicList = new ArrayList<>();
         mSeriesList = new ArrayList<>();
         mStoriesList = new ArrayList<>();
         mEventsList = new ArrayList<>();
     }
 
     @Override
-    public void detachView() {
-        mComicList = null;
-        mSeriesList = null;
-        mStoriesList = null;
-        mEventsList = null;
-        super.detachView();
+    public void onCharacterRequested(Long characterId) {
+        getCharacter(characterId);
     }
 
-    public void getCharacter(long id) {
-        checkViewAttached();
-        final Call<CharacterDataWrapper> request = mDataManager.getCharacter(id);
-        getPresenterView().showMessageLayout(false);
-        getPresenterView().showProgress();
-        request.enqueue(new Callback<CharacterDataWrapper>() {
-            @Override
-            public void onResponse(Call<CharacterDataWrapper> call, Response<CharacterDataWrapper> response) {
-                switch (response.code()) {
-                    case 200:
-                        getPresenterView().hideProgress();
-                        if (response.body().getData().getResults().isEmpty()) {
-                            getPresenterView().showEmpty();
-                            return;
-                        }
-                        getPresenterView().showCharacter(response.body().getData().getResults().get(SINGLE_ITEM_INDEX));
-                        break;
+    @Override
+    public void onCharacterComicsRequested(Long characterId, int limit) {
+        getComicList(characterId, null, limit);
+    }
 
-                    default:
-                        getPresenterView().hideProgress();
-                        getPresenterView().showError("Server error: " + response.code() + " " + response.message());
+    @Override
+    public void onCharacterSeriesRequested(Long characterId, int limit) {
+        getSeriesList(characterId, null, limit);
+    }
+
+    @Override
+    public void onCharacterStoriesRequested(Long characterId, int limit) {
+        getStoriesList(characterId, null, limit);
+    }
+
+    @Override
+    public void onCharacterEventsRequested(Long characterId, int limit) {
+        getEventsList(characterId, null, limit);
+    }
+
+    private void getCharacter(long id) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        if (mCharacter != null && mCharacter.getId() == id) {
+            mView.showCharacter(mCharacter);
+            return;
+        }
+
+        mView.showProgress();
+        DataManager.getInstance().getCharacter(id, new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
+            @Override
+            public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
+                mView.hideProgress();
+                if (response.getData().getResults().isEmpty()) {
+                    mView.showError("Character does not exist");
+                    return;
                 }
+                mCharacter = response.getData().getResults().get(SINGLE_ITEM_INDEX);
+                mView.showCharacter(mCharacter);
             }
 
             @Override
-            public void onFailure(Call<CharacterDataWrapper> call, Throwable t) {
-                getPresenterView().hideProgress();
-                getPresenterView().showError("Failed: " + t.getMessage());
+            public void onUnauthorized() {
+                mView.showUnauthorizedError();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                mView.showError(throwable.getMessage());
             }
         });
     }
 
-    public void getComicList(long id) {
-        getComicList(id, null, null);
-    }
+    private void getComicList(long id, Integer offset, Integer limit) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        mView.showProgress();
 
-    public void getComicList(long id, int limit) {
-        getComicList(id, null, limit);
-    }
-
-    public void getComicList(long id, Integer offset, Integer limit) {
-        checkViewAttached();
-        if (mComicList != null) {
-            getPresenterView().showComicList(mComicList);
-            return;
-        }
-
-        final Call<ComicDataWrapper> request = mDataManager.getComics(id, offset, limit);
-
-        request.enqueue(new Callback<ComicDataWrapper>() {
+        DataManager.getInstance().getComics(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
-            public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                switch (response.code()) {
-                    case 200:
-                        mComicList = response.body().getData().getResults();
-                        if (response.body().getData().getResults().isEmpty()) {
-                            return;
-                        }
-                        getPresenterView().showComicList(mComicList);
-                        break;
-
-                    default:
-                        getPresenterView().showError("Server error: " + response.code() + " "
-                                + response.message());
+            public void onSuccess(DataWrapper<List<Comic>> response) {
+                mView.hideProgress();
+                if (response.getData().getResults().isEmpty()) {
+                    mView.showError("Character has no comics");
+                    return;
                 }
+                mView.showComicList(response.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<ComicDataWrapper> call, Throwable t) {
-                if (getPresenterView() != null) {
-                    getPresenterView().showError(t.toString());
-                }
+            public void onUnauthorized() {
+                mView.showUnauthorizedError();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                mView.showError(throwable.getMessage());
             }
         });
     }
 
-    public void getSeriesList(long id) {
-        getSeriesList(id, null, null);
-    }
+    private void getSeriesList(long id, Integer offset, Integer limit) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        mView.showProgress();
 
-    public void getSeriesList(long id, int limit) {
-        getSeriesList(id, null, limit);
-    }
-
-    public void getSeriesList(long id, Integer offset, Integer limit) {
-        checkViewAttached();
-        if (mSeriesList != null) {
-            getPresenterView().showComicList(mSeriesList);
-            return;
-        }
-
-        final Call<ComicDataWrapper> request = mDataManager.getSeries(id, offset, limit);
-
-        request.enqueue(new Callback<ComicDataWrapper>() {
+        DataManager.getInstance().getSeries(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
-            public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                switch (response.code()) {
-                    case 200:
-                        mSeriesList = response.body().getData().getResults();
-                        if (response.body().getData().getResults().isEmpty()) {
-                            return;
-                        }
-                        getPresenterView().showSeriesList(mSeriesList);
-                        break;
-
-                    default:
-                        getPresenterView().showError("Server error: " + response.code() + " "
-                                + response.message());
+            public void onSuccess(DataWrapper<List<Comic>> response) {
+                mView.hideProgress();
+                if (response.getData().getResults().isEmpty()) {
+                    mView.showError("Character has no series");
+                    return;
                 }
+                mView.showSeriesList(response.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<ComicDataWrapper> call, Throwable t) {
-                if (getPresenterView() != null) {
-                    getPresenterView().showError("Failed: " + t.getMessage());
-                }
+            public void onUnauthorized() {
+                mView.showUnauthorizedError();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                mView.showError(throwable.getMessage());
             }
         });
     }
 
-    public void getStoriesList(long id) {
-        getStoriesList(id, null, null);
-    }
+    private void getStoriesList(long id, Integer offset, Integer limit) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        mView.showProgress();
 
-    public void getStoriesList(long id, int limit) {
-        getStoriesList(id, null, limit);
-    }
-
-    public void getStoriesList(long id, Integer offset, Integer limit) {
-        checkViewAttached();
-        if (mStoriesList != null) {
-            getPresenterView().showComicList(mStoriesList);
-            return;
-        }
-
-        final Call<ComicDataWrapper> request = mDataManager.getStories(id, offset, limit);
-
-        request.enqueue(new Callback<ComicDataWrapper>() {
+        DataManager.getInstance().getStories(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
-            public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                switch (response.code()) {
-                    case 200:
-                        mStoriesList = response.body().getData().getResults();
-                        if (response.body().getData().getResults().isEmpty()) {
-                            return;
-                        }
-                        getPresenterView().showStoriesList(mStoriesList);
-                        break;
-
-                    default:
-                        getPresenterView().showError("Server error: " + response.code() + " "
-                                + response.message());
+            public void onSuccess(DataWrapper<List<Comic>> response) {
+                mView.hideProgress();
+                if (response.getData().getResults().isEmpty()) {
+                    mView.showError("Character has no stories");
+                    return;
                 }
+                mView.showStoriesList(response.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<ComicDataWrapper> call, Throwable t) {
-                if (getPresenterView() != null) {
-                    getPresenterView().showError("Failed: " + t.getMessage());
-                }
+            public void onUnauthorized() {
+                mView.showUnauthorizedError();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                mView.showError(throwable.getMessage());
             }
         });
     }
 
-    public void getEventsList(long id) {
-        getEventsList(id, null, null);
-    }
+    private void getEventsList(long id, Integer offset, Integer limit) {
+        if (!isViewAttached()) return;
+        mView.showMessageLayout(false);
+        mView.showProgress();
 
-    public void getEventsList(long id, int limit) {
-        getEventsList(id, null, limit);
-    }
-
-    public void getEventsList(long id, Integer offset, Integer limit) {
-        checkViewAttached();
-        if (mEventsList != null) {
-            getPresenterView().showComicList(mEventsList);
-            return;
-        }
-
-        final Call<ComicDataWrapper> request = mDataManager.getEvents(id, offset, limit);
-
-        request.enqueue(new Callback<ComicDataWrapper>() {
+        DataManager.getInstance().getEvents(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
-            public void onResponse(Call<ComicDataWrapper> call, Response<ComicDataWrapper> response) {
-                switch (response.code()) {
-                    case 200:
-                        mEventsList = response.body().getData().getResults();
-                        if (response.body().getData().getResults().isEmpty()) {
-                            return;
-                        }
-                        getPresenterView().showEventsList(mEventsList);
-                        break;
-
-                    default:
-                        getPresenterView().showError("Server error: " + response.code() + " "
-                                + response.message());
+            public void onSuccess(DataWrapper<List<Comic>> response) {
+                mView.hideProgress();
+                if (response.getData().getResults().isEmpty()) {
+                    mView.showError("Character has no events");
+                    return;
                 }
+                mView.showEventsList(response.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<ComicDataWrapper> call, Throwable t) {
-                if (getPresenterView() != null) {
-                    getPresenterView().showError("Failed: " + t.getMessage());
-                }
+            public void onUnauthorized() {
+                mView.showUnauthorizedError();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                mView.showError(throwable.getMessage());
             }
         });
     }

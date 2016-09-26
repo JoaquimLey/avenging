@@ -48,13 +48,13 @@ import com.joaquimley.avenging.R;
 import com.joaquimley.avenging.ui.character.CharacterActivity;
 import com.joaquimley.avenging.util.DisplayMetricsUtil;
 import com.joaquimley.core.data.model.CharacterMarvel;
+import com.joaquimley.core.ui.list.ListContract;
 import com.joaquimley.core.ui.list.ListPresenter;
-import com.joaquimley.core.ui.list.ListPresenterView;
 
 import java.util.List;
 
-public class ListFragment extends Fragment implements ListPresenterView, ListAdapter.InteractionListener,
-        SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
+public class ListFragment extends Fragment implements ListContract.ListView,
+        ListAdapter.InteractionListener, SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int TAB_LAYOUT_SPAN_SIZE = 2;
     private static final int TAB_LAYOUT_ITEM_SPAN_SIZE = 1;
@@ -110,7 +110,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
         mListPresenter.attachView(this);
         mListCharacterAdapter.setListInteractionListener(this);
         if (mListCharacterAdapter.isEmpty()) {
-            mListPresenter.getCharacters();
+            mListPresenter.onInitialListRequested();
         }
         return view;
     }
@@ -183,7 +183,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 if (mListCharacterAdapter.addLoadingView()) {
-                    mListPresenter.getCharacters(totalItemsCount, true, mSearchQuery);
+                    mListPresenter.onListEndReached(totalItemsCount, null, mSearchQuery);
                 }
             }
         };
@@ -192,14 +192,19 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
     @Override
     public void onRefresh() {
         mListCharacterAdapter.removeAll();
-        mListPresenter.getCharacters();
+        mListPresenter.onInitialListRequested();
     }
 
 
     @Override
     public void showCharacters(List<CharacterMarvel> characterList) {
-        mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_GALLERY);
-        mSwipeRefreshLayout.setEnabled(true);
+        if (mListCharacterAdapter.getViewType() != ListAdapter.VIEW_TYPE_GALLERY) {
+            mListCharacterAdapter.removeAll();
+            mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_GALLERY);
+        }
+        if(!mSwipeRefreshLayout.isActivated()) {
+            mSwipeRefreshLayout.setEnabled(true);
+        }
         mListCharacterAdapter.addItems(characterList);
     }
 
@@ -210,7 +215,9 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
             mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_LIST);
 
         }
-        mSwipeRefreshLayout.setEnabled(false);
+        if(mSwipeRefreshLayout.isActivated()) {
+            mSwipeRefreshLayout.setEnabled(false);
+        }
         mListCharacterAdapter.addItems(searchResults);
     }
 
@@ -226,6 +233,14 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
         mSwipeRefreshLayout.setRefreshing(false);
         mContentLoadingProgress.setVisibility(View.GONE);
         mListCharacterAdapter.removeLoadingView();
+    }
+
+    @Override
+    public void showUnauthorizedError() {
+        mMessageImage.setImageResource(R.drawable.ic_error_list);
+        mMessageText.setText(getString(R.string.error_generic_server_error, "Unauthorized"));
+        mMessageButton.setText(getString(R.string.action_try_again));
+        showMessageLayout(true);
     }
 
     @Override
@@ -292,7 +307,7 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
     public boolean onQueryTextChange(String queryText) {
         mSearchQuery = queryText;
         if (!TextUtils.isEmpty(mSearchQuery)) {
-            mListPresenter.getCharacters(mSearchQuery);
+            mListPresenter.onCharacterSearched(mSearchQuery);
             return true;
         }
         return false;
@@ -301,7 +316,6 @@ public class ListFragment extends Fragment implements ListPresenterView, ListAda
     @Override
     public void onDestroy() {
         mListPresenter.detachView();
-        mListPresenter = null;
         super.onDestroy();
     }
 }

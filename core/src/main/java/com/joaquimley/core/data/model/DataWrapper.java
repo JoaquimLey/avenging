@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BaseDataWrapper {
+public class DataWrapper<T> {
 
     @JsonProperty("code")
     public int mCode;
@@ -34,8 +34,10 @@ public class BaseDataWrapper {
     public String mAttributionHTML;
     @JsonProperty("etag")
     public String mETag;
+    @JsonProperty("data")
+    public DataContainer<T> mData;
 
-    public BaseDataWrapper() {
+    public DataWrapper() {
     }
 
     public int getCode() {
@@ -86,4 +88,11 @@ public class BaseDataWrapper {
         mETag = eTag;
     }
 
+    public DataContainer<T> getData() {
+        return mData;
+    }
+
+    public void setData(DataContainer<T> data) {
+        mData = data;
+    }
 }

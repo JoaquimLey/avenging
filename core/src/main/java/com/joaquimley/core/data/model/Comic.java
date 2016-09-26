@@ -19,27 +19,15 @@ package com.joaquimley.core.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.StringDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Comic extends CharacterComic implements Parcelable {
-
-    public static final String COMIC_TYPE_COMICS = "comics";
-    public static final String COMIC_TYPE_SERIES = "series";
-    public static final String COMIC_TYPE_STORIES = "stories";
-    public static final String COMIC_TYPE_EVENTS = "events";
-
-    @StringDef({COMIC_TYPE_COMICS, COMIC_TYPE_SERIES, COMIC_TYPE_STORIES, COMIC_TYPE_EVENTS})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {}
+public class Comic implements Parcelable {
 
     @JsonProperty("id")
     private Integer mId;
@@ -53,11 +41,14 @@ public class Comic extends CharacterComic implements Parcelable {
     private Integer mEndYear;
     @JsonProperty("rating")
     private String mRating;
-    @Type
     @JsonProperty("type")
     private String mType;
     @JsonProperty("modified")
     private String mModified;
+    @JsonProperty("name")
+    private String mName;
+    @JsonProperty("resourceURI")
+    private String mResourceUri;
     @JsonProperty(value = "thumbnail")
     private Image mThumbnail;
     @JsonProperty(value = "images")
@@ -89,6 +80,59 @@ public class Comic extends CharacterComic implements Parcelable {
         }
         return results;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comic)) return false;
+        Comic comic = (Comic) o;
+        return mId != null ? mId.equals(comic.mId) : comic.mId == null
+                && (mType != null ? mType.equals(comic.mType) : comic.mType == null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId != null ? mId.hashCode() : 0;
+        result = 31 * result + (mType != null ? mType.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.mId);
+        dest.writeString(this.mTitle);
+        dest.writeString(this.mResourceUri);
+        dest.writeParcelable(this.mThumbnail, flags);
+        dest.writeTypedList(this.mImageList);
+    }
+
+    protected Comic(Parcel in) {
+        this.mId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mTitle = in.readString();
+        this.mResourceUri = in.readString();
+        this.mThumbnail = in.readParcelable(Image.class.getClassLoader());
+        this.mImageList = in.createTypedArrayList(Image.CREATOR);
+    }
+
+    public static final Creator<Comic> CREATOR = new Creator<Comic>() {
+        @Override
+        public Comic createFromParcel(Parcel source) {
+            return new Comic(source);
+        }
+
+        @Override
+        public Comic[] newArray(int size) {
+            return new Comic[size];
+        }
+    };
 
     public Integer getId() {
         return mId;
@@ -142,7 +186,7 @@ public class Comic extends CharacterComic implements Parcelable {
         return mType;
     }
 
-    public void setType(@Type String type) {
+    public void setType(String type) {
         mType = type;
     }
 
@@ -154,6 +198,22 @@ public class Comic extends CharacterComic implements Parcelable {
         mModified = modified;
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public String getResourceUri() {
+        return mResourceUri;
+    }
+
+    public void setResourceUri(String resourceUri) {
+        mResourceUri = resourceUri;
+    }
+
     public Image getThumbnail() {
         return mThumbnail;
     }
@@ -162,37 +222,11 @@ public class Comic extends CharacterComic implements Parcelable {
         mThumbnail = thumbnail;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<Image> getImageList() {
+        return mImageList;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.mId);
-        dest.writeString(this.mTitle);
-        dest.writeString(this.mResourceUri);
-        dest.writeParcelable(this.mThumbnail, flags);
-        dest.writeTypedList(this.mImageList);
+    public void setImageList(List<Image> imageList) {
+        mImageList = imageList;
     }
-
-    protected Comic(Parcel in) {
-        this.mId = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.mTitle = in.readString();
-        this.mResourceUri = in.readString();
-        this.mThumbnail = in.readParcelable(Image.class.getClassLoader());
-        this.mImageList = in.createTypedArrayList(Image.CREATOR);
-    }
-
-    public static final Creator<Comic> CREATOR = new Creator<Comic>() {
-        @Override
-        public Comic createFromParcel(Parcel source) {
-            return new Comic(source);
-        }
-
-        @Override
-        public Comic[] newArray(int size) {
-            return new Comic[size];
-        }
-    };
 }

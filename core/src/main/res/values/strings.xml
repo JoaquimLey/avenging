@@ -17,7 +17,7 @@
 <resources>
     <string name="app_name">Avenging</string>
     <string name="marvel_characters">Marvel Characters</string>
-    <string name="marvel_copyright_notice">All Data provided by Marvel. © 2016 MARVEL</string>
+    <string name="marvel_copyright_notice">  All Data provided by Marvel. © 2016 MARVEL</string>
 
     <string name="action_acknowledge">Acknowledge</string>
     <string name="action_try_again">Try Again</string>

@@ -39,25 +39,22 @@ import com.joaquimley.avenging.util.widgets.DescriptionFrameWrapper;
 import com.joaquimley.avenging.util.widgets.UrlFrameWrapper;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
+import com.joaquimley.core.ui.character.CharacterContract;
 import com.joaquimley.core.ui.character.CharacterPresenter;
-import com.joaquimley.core.ui.character.CharacterPresenterView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
-public class CharacterFragment extends Fragment implements CharacterPresenterView,
+public class CharacterFragment extends Fragment implements CharacterContract.CharacterView,
         ComicAdapter.InteractionListener {
 
     private static final String ARG_CHARACTER = "argCharacter";
-    private static final String ARG_CHARACTER_DOWNLOADED = "argCharacterDownloaded";
+
+    private CharacterPresenter mCharacterPresenter;
+    private CharacterMarvel mCharacterMarvel;
 
     private AppCompatActivity mActivity;
-    private CharacterPresenter mCharacterPresenter;
-
-    private CharacterMarvel mCharacterMarvel;
-    private boolean mCharacterDownloaded;
-
     private LinearLayout mContentFrame;
     private ProgressBar mContentLoadingProgress;
 
@@ -75,7 +72,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
     public static CharacterFragment newInstance(CharacterMarvel characterMarvel) {
         Bundle args = new Bundle();
         args.putParcelable(ARG_CHARACTER, characterMarvel);
-        args.putBoolean(ARG_CHARACTER_DOWNLOADED, false);
         CharacterFragment fragment = new CharacterFragment();
         fragment.setArguments(args);
         return fragment;
@@ -95,17 +91,14 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         mCharacterPresenter = new CharacterPresenter();
         if (savedInstanceState != null) {
             mCharacterMarvel = savedInstanceState.getParcelable(ARG_CHARACTER);
-            mCharacterDownloaded = savedInstanceState.getBoolean(ARG_CHARACTER_DOWNLOADED);
         } else if (getArguments() != null) {
             mCharacterMarvel = getArguments().getParcelable(ARG_CHARACTER);
-            mCharacterDownloaded = getArguments().getBoolean(ARG_CHARACTER_DOWNLOADED);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(ARG_CHARACTER, mCharacterMarvel);
-        outState.putBoolean(ARG_CHARACTER_DOWNLOADED, mCharacterDownloaded);
         super.onSaveInstanceState(outState);
     }
 
@@ -116,12 +109,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
 
         mCharacterPresenter.attachView(this);
         initViews(view);
-        if (mCharacterDownloaded) {
-            showCharacter(mCharacterMarvel);
-        } else {
-            mCharacterPresenter.getCharacter(mCharacterMarvel.getId());
-        }
-
+        mCharacterPresenter.onCharacterRequested(mCharacterMarvel.getId());
         return view;
     }
 
@@ -159,11 +147,7 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         mMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mCharacterDownloaded) {
-                    showCharacter(mCharacterMarvel);
-                } else {
-                    mCharacterPresenter.getCharacter(mCharacterMarvel.getId());
-                }
+                mCharacterPresenter.onCharacterRequested(mCharacterMarvel.getId());
             }
         });
     }
@@ -183,36 +167,28 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         if (!characterComics.isEmpty()) {
             mComicWrapper = new ComicFrameWrapper(mActivity, getString(R.string.comics), characterComics, this);
             mContentFrame.addView(mComicWrapper);
-            if (!mCharacterDownloaded) {
-                mCharacterPresenter.getComicList(character.getId(), characterComics.size());
-            }
+            mCharacterPresenter.onCharacterComicsRequested(character.getId(), characterComics.size());
         }
 
         List<Comic> characterSeries = character.getSeries().getItems();
         if (!characterSeries.isEmpty()) {
             mSeriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.series), characterSeries, this);
             mContentFrame.addView(mSeriesWrapper);
-            if (!mCharacterDownloaded) {
-                mCharacterPresenter.getSeriesList(character.getId(), characterSeries.size());
-            }
+            mCharacterPresenter.onCharacterSeriesRequested(character.getId(), characterSeries.size());
         }
 
         List<Comic> characterStories = character.getStories().getItems();
         if (!characterStories.isEmpty()) {
             mStoriesWrapper = new ComicFrameWrapper(mActivity, getString(R.string.stories), characterStories, this);
             mContentFrame.addView(mStoriesWrapper);
-            if (!mCharacterDownloaded) {
-                mCharacterPresenter.getStoriesList(character.getId(), characterStories.size());
-            }
+            mCharacterPresenter.onCharacterStoriesRequested(character.getId(), characterStories.size());
         }
 
         List<Comic> characterEvents = character.getEvents().getItems();
         if (!characterEvents.isEmpty()) {
             mEventsWrapper = new ComicFrameWrapper(mActivity, getString(R.string.events), characterEvents, this);
             mContentFrame.addView(mEventsWrapper);
-            if (!mCharacterDownloaded) {
-                mCharacterPresenter.getEventsList(character.getId(), characterEvents.size());
-            }
+            mCharacterPresenter.onCharacterEventsRequested(character.getId(), characterEvents.size());
         }
 
         if (!character.getUrls().isEmpty()) {
@@ -222,7 +198,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
         TextView copyRightTextView = new TextView(mActivity);
         copyRightTextView.setText(getString(R.string.marvel_copyright_notice));
         mContentFrame.addView(copyRightTextView);
-        mCharacterDownloaded = true;
     }
 
     @Override
@@ -239,7 +214,9 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
 
     @Override
     public void showProgress() {
-        mContentLoadingProgress.setVisibility(View.VISIBLE);
+        if (mContentLoadingProgress.getVisibility() != View.VISIBLE) {
+            mContentLoadingProgress.setVisibility(View.VISIBLE);
+        }
         mContentFrame.setVisibility(View.GONE);
     }
 
@@ -247,6 +224,14 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
     public void hideProgress() {
         mContentLoadingProgress.setVisibility(View.GONE);
         mContentFrame.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showUnauthorizedError() {
+        mMessageImage.setImageResource(R.drawable.ic_error_list);
+        mMessageText.setText(getString(R.string.error_generic_server_error, "Unauthorized"));
+        mMessageButton.setText(getString(R.string.action_try_again));
+        showMessageLayout(true);
     }
 
     @Override
@@ -294,7 +279,6 @@ public class CharacterFragment extends Fragment implements CharacterPresenterVie
     @Override
     public void onDestroy() {
         mCharacterPresenter.detachView();
-        mCharacterPresenter = null;
         super.onDestroy();
     }
 }

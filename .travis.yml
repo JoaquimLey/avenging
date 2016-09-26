@@ -11,7 +11,7 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by your project
-    - build-tools-24.0.0
+    - build-tools-24.0.2
     - android-24
     - extra-android-m2repository
     - extra-google-m2repository
@@ -20,6 +20,11 @@ android:
       # Specify at least one system image, if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-24
 
+  licenses:
+      - android-sdk-preview-license-.+
+      - android-sdk-license-.+
+      - google-gdk-license-.+
+    
 notifications:
   email: false
 

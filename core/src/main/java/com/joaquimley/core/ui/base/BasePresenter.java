@@ -12,46 +12,37 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+<<<<<<< HEAD
+=======
  */
 
 package com.joaquimley.core.ui.base;
+
+import android.support.annotation.NonNull;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
  * attachView() and detachView(). It also handles keeping a reference to the PresenterView that
  * can be accessed from the children classes by calling getPresenterView().
  */
-public class BasePresenter<T extends BasePresenterView> implements Presenter<T> {
 
-    private T mPresenterView;
+public abstract class BasePresenter<V> {
 
-    @Override
-    public void attachView(T presenterView) {
-        mPresenterView = presenterView;
+    protected V mView;
+
+    public final void attachView(@NonNull V view) {
+        mView = view;
     }
 
-    @Override
-    public void detachView() {
-        mPresenterView = null;
+    public final void detachView() {
+        mView = null;
     }
 
-    public boolean isViewAttached() {
-        return mPresenterView != null;
-    }
-
-    public T getPresenterView() {
-        return mPresenterView;
-    }
-
-    public void checkViewAttached() {
-        if (!isViewAttached()) throw new PresenterViewNotAttachedException();
-    }
-
-    public static class PresenterViewNotAttachedException extends RuntimeException {
-        public PresenterViewNotAttachedException() {
-            super("Please call Presenter.attachView(presenterView) before" +
-                    " requesting data to the Presenter");
-        }
+    /**
+     * Check if the view is attached.
+     * This checking is only necessary when returning from an asynchronous call
+     */
+    protected final boolean isViewAttached() {
+        return mView != null;
     }
 }
-

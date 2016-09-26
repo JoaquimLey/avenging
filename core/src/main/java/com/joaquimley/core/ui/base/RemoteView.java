@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package com.joaquimley.core.data.model;
+package com.joaquimley.core.ui.base;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+public interface RemoteView {
 
-import java.util.ArrayList;
-import java.util.List;
+    void showProgress();
 
-public class CharacterDataContainer extends BaseDataContainer {
+    void hideProgress();
 
-    @JsonProperty("results")
-    public List<CharacterMarvel> mResults = new ArrayList<>();
+    void showUnauthorizedError();
 
-    public CharacterDataContainer() {
-    }
+    void showEmpty();
 
-    public List<CharacterMarvel> getResults() {
-        return mResults;
-    }
+    void showError(String errorMessage);
 
-    public void setResults(List<CharacterMarvel> results) {
-        mResults = results;
-    }
+    void showMessageLayout(boolean show);
 }
