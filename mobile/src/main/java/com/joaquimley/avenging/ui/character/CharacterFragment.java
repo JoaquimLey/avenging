@@ -214,7 +214,9 @@ public class CharacterFragment extends Fragment implements CharacterContract.Cha
 
     @Override
     public void showProgress() {
-        mContentLoadingProgress.setVisibility(View.VISIBLE);
+        if (mContentLoadingProgress.getVisibility() != View.VISIBLE) {
+            mContentLoadingProgress.setVisibility(View.VISIBLE);
+        }
         mContentFrame.setVisibility(View.GONE);
     }
 

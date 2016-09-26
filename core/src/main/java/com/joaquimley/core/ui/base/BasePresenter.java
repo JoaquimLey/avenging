@@ -12,11 +12,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+<<<<<<< HEAD
+=======
  */
 
 package com.joaquimley.core.ui.base;
 
 import android.support.annotation.NonNull;
+
+/**
+ * Base class that implements the Presenter interface and provides a base implementation for
+ * attachView() and detachView(). It also handles keeping a reference to the PresenterView that
+ * can be accessed from the children classes by calling getPresenterView().
+ */
 
 public abstract class BasePresenter<V> {
 

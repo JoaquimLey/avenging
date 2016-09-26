@@ -184,6 +184,15 @@ public class DataManager {
  * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
  * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
  * 403	Forbidden
+ * <p>
+ * -- Authorization --
+ * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
+ * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
+ * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
+ * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
+ * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
+ * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
+ * 403	Forbidden
  */
 
 /**

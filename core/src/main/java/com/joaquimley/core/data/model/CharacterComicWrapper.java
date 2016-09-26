@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CharacterComicDataContainer {
+public class CharacterComicWrapper {
 
     @JsonProperty("available")
     protected int mAvailable;
@@ -35,7 +35,7 @@ public class CharacterComicDataContainer {
     public List<Comic> mItems = new ArrayList<>();
 
 
-    public CharacterComicDataContainer() {
+    public CharacterComicWrapper() {
     }
 
 

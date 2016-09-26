@@ -8,6 +8,7 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 24
+
         if (System.getenv().containsKey("IS_CI_JOB")) {
             buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
             buildConfigField("String", "PUBLIC_KEY", "\"" + System.getenv("CI_PUBLIC_KEY") + "\"")

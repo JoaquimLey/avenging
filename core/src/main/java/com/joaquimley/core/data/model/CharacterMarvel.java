@@ -40,13 +40,13 @@ public class CharacterMarvel implements Parcelable {
     @JsonProperty(value = "thumbnail")
     private Image mThumbnail;
     @JsonProperty(value = "comics")
-    private CharacterComicDataContainer mComics;
+    private CharacterComicWrapper mComics;
     @JsonProperty(value = "series")
-    private CharacterComicDataContainer mSeries;
+    private CharacterComicWrapper mSeries;
     @JsonProperty(value = "stories")
-    private CharacterComicDataContainer mStories;
+    private CharacterComicWrapper mStories;
     @JsonProperty(value = "events")
-    private CharacterComicDataContainer mEvents;
+    private CharacterComicWrapper mEvents;
     @JsonProperty(value = "urls")
     private List<Url> mUrls;
 
@@ -102,35 +102,35 @@ public class CharacterMarvel implements Parcelable {
         mThumbnail = thumbnail;
     }
 
-    public CharacterComicDataContainer getComics() {
+    public CharacterComicWrapper getComics() {
         return mComics;
     }
 
-    public void setComics(CharacterComicDataContainer comics) {
+    public void setComics(CharacterComicWrapper comics) {
         mComics = comics;
     }
 
-    public CharacterComicDataContainer getSeries() {
+    public CharacterComicWrapper getSeries() {
         return mSeries;
     }
 
-    public void setSeries(CharacterComicDataContainer series) {
+    public void setSeries(CharacterComicWrapper series) {
         mSeries = series;
     }
 
-    public CharacterComicDataContainer getStories() {
+    public CharacterComicWrapper getStories() {
         return mStories;
     }
 
-    public void setStories(CharacterComicDataContainer stories) {
+    public void setStories(CharacterComicWrapper stories) {
         mStories = stories;
     }
 
-    public CharacterComicDataContainer getEvents() {
+    public CharacterComicWrapper getEvents() {
         return mEvents;
     }
 
-    public void setEvents(CharacterComicDataContainer events) {
+    public void setEvents(CharacterComicWrapper events) {
         mEvents = events;
     }
 
