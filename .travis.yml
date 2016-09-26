@@ -21,9 +21,9 @@ android:
     - sys-img-armeabi-v7a-android-24
 
   licenses:
-      - 'android-sdk-preview-license-.+'
-      - 'android-sdk-license-.+'
-      - 'google-gdk-license-.+'
+      - android-sdk-preview-license-.+
+      - android-sdk-license-.+
+      - google-gdk-license-.+
     
 notifications:
   email: false
