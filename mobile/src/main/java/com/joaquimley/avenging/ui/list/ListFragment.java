@@ -47,6 +47,7 @@ import android.widget.TextView;
 import com.joaquimley.avenging.R;
 import com.joaquimley.avenging.ui.character.CharacterActivity;
 import com.joaquimley.avenging.util.DisplayMetricsUtil;
+import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.ui.list.ListContract;
 import com.joaquimley.core.ui.list.ListPresenter;
@@ -97,7 +98,7 @@ public class ListFragment extends Fragment implements ListContract.ListView,
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        mListPresenter = new ListPresenter();
+        mListPresenter = new ListPresenter(DataManager.getInstance());
         mListCharacterAdapter = new ListAdapter();
     }
 
