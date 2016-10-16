@@ -25,7 +25,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public abstract class RemoteCallback<T> implements Callback<T> {
-
     @Override
     public final void onResponse(Call<T> call, Response<T> response) {
         switch (response.code()) {

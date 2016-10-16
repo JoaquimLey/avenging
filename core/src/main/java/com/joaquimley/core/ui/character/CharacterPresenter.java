@@ -23,7 +23,6 @@ import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.ui.base.BasePresenter;
 import com.joaquimley.core.ui.base.RemoteCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterPresenter extends BasePresenter<CharacterContract.CharacterView> implements
@@ -31,17 +30,20 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
     private static final int SINGLE_ITEM_INDEX = 0;
 
-    private CharacterMarvel mCharacter;
-    private List<Comic> mComicList;
-    private List<Comic> mSeriesList;
-    private List<Comic> mStoriesList;
-    private List<Comic> mEventsList;
+    private DataManager mDataManager;
 
-    public CharacterPresenter() {
-        mComicList = new ArrayList<>();
-        mSeriesList = new ArrayList<>();
-        mStoriesList = new ArrayList<>();
-        mEventsList = new ArrayList<>();
+    private CharacterMarvel mCharacter;
+//    private List<Comic> mComicList;
+//    private List<Comic> mSeriesList;
+//    private List<Comic> mStoriesList;
+//    private List<Comic> mEventsList;
+
+    public CharacterPresenter(DataManager dataManager) {
+        mDataManager = dataManager;
+//        mComicList = new ArrayList<>();
+//        mSeriesList = new ArrayList<>();
+//        mStoriesList = new ArrayList<>();
+//        mEventsList = new ArrayList<>();
     }
 
     @Override
@@ -78,7 +80,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         }
 
         mView.showProgress();
-        DataManager.getInstance().getCharacter(id, new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
+        mDataManager.getCharacter(id, new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
             @Override
             public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
                 mView.hideProgress();
@@ -107,7 +109,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mView.showMessageLayout(false);
         mView.showProgress();
 
-        DataManager.getInstance().getComics(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
+        mDataManager.getComics(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
                 mView.hideProgress();
@@ -135,7 +137,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mView.showMessageLayout(false);
         mView.showProgress();
 
-        DataManager.getInstance().getSeries(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
+        mDataManager.getSeries(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
                 mView.hideProgress();
@@ -163,7 +165,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mView.showMessageLayout(false);
         mView.showProgress();
 
-        DataManager.getInstance().getStories(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
+        mDataManager.getStories(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
                 mView.hideProgress();
@@ -191,7 +193,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mView.showMessageLayout(false);
         mView.showProgress();
 
-        DataManager.getInstance().getEvents(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
+        mDataManager.getEvents(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
                 mView.hideProgress();

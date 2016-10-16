@@ -37,6 +37,7 @@ import com.joaquimley.avenging.ui.comic.ComicFragment;
 import com.joaquimley.avenging.util.widgets.ComicFrameWrapper;
 import com.joaquimley.avenging.util.widgets.DescriptionFrameWrapper;
 import com.joaquimley.avenging.util.widgets.UrlFrameWrapper;
+import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.ui.character.CharacterContract;
@@ -88,7 +89,7 @@ public class CharacterFragment extends Fragment implements CharacterContract.Cha
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        mCharacterPresenter = new CharacterPresenter();
+        mCharacterPresenter = new CharacterPresenter(DataManager.getInstance());
         if (savedInstanceState != null) {
             mCharacterMarvel = savedInstanceState.getParcelable(ARG_CHARACTER);
         } else if (getArguments() != null) {

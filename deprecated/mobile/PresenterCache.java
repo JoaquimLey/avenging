@@ -20,7 +20,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-public class PresenterCache { // TODO: 24/07/16 Must make this work
+@Deprecated
+public class PresenterCache {
 
     public static final String TAG = PresenterCache.class.getSimpleName();
 
