@@ -21,11 +21,11 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
@@ -54,8 +54,11 @@ public class ListPresenterTest {
         mPresenter.attachView(mView);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
-    public void initialListRequested() {
+    public void initialListRequested_Success() {
+
+        String searchQuery = null;
 
         mPresenter.onInitialListRequested();
 
@@ -63,19 +66,109 @@ public class ListPresenterTest {
         inOrder.verify(mView).showMessageLayout(false);
         inOrder.verify(mView).showProgress();
 
-        List<CharacterMarvel> results = Arrays.asList(new CharacterMarvel(), new CharacterMarvel());
+        List<CharacterMarvel> results = asList(new CharacterMarvel(), new CharacterMarvel());
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        when(TextUtils.isEmpty(anyString())).thenReturn(true);
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(true);
 
-        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq((String) null), mGetCharactersListCallbackCaptor.capture());
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
         mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
         inOrder.verify(mView).showCharacters(response.getData().getResults());
+    }
+
+    @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
+    @Test
+    public void initialListRequested_Unauthorized() {
+
+        String searchQuery = null;
+
+        mPresenter.onInitialListRequested();
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
+        mGetCharactersListCallbackCaptor.getValue().onUnauthorized();
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showUnauthorizedError();
+    }
+
+    @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
+    @Test
+    public void initialListRequested_Failed() {
+
+        String searchQuery = null;
+
+        mPresenter.onInitialListRequested();
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+        Throwable error = new Throwable("Unknown error");
+
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
+        mGetCharactersListCallbackCaptor.getValue().onFailed(error);
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showError(error.getMessage());
+    }
+
+    @Test
+    public void characterSearched_Success() {
+
+        String searchQuery = "query";
+
+        mPresenter.onCharacterSearched(searchQuery);
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+        List<CharacterMarvel> results = asList(new CharacterMarvel(), new CharacterMarvel());
+        DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
+        data.setResults(results);
+        DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
+        response.setData(data);
+
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(false);
+
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
+        mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showSearchedCharacters(response.getData().getResults());
+    }
+
+    @Test
+    public void characterSearched_NoResult() {
+
+        String searchQuery = "query";
+
+        mPresenter.onCharacterSearched(searchQuery);
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+        List<CharacterMarvel> results = Collections.emptyList();
+        DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
+        data.setResults(results);
+        DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
+        response.setData(data);
+
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
+        mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showEmpty();
     }
 
     @After
