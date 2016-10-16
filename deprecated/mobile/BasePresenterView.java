@@ -16,13 +16,15 @@
 
 package com.joaquimley.core.ui.base;
 
+
 /**
- * Every presenter in the app must either implement this interface or extend BasePresenter
- * indicating the BasePresenterView type that wants to be attached with.
+ * Base interface that any class that wants to act as a View in the MVP (Model View Presenter)
+ * pattern must implement. Generally this interface will be extended by a more specific interface
+ * that then usually will be implemented by an Activity or Fragment.
  */
-public interface Presenter<V extends BasePresenterView> {
+@Deprecated
+public interface BasePresenterView {
 
-    void attachView(V presenterView);
+//    <T extends BasePresenterView> T createPresenter();
 
-    void detachView();
 }
