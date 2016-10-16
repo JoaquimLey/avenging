@@ -16,6 +16,7 @@
 
 package com.joaquimley.core.ui.list;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -32,7 +33,11 @@ public class ListPresenter extends BasePresenter<ListContract.ListView> implemen
     private static final int ITEM_REQUEST_INITIAL_OFFSET = 0;
     private static final int ITEM_REQUEST_LIMIT = 6;
 
-//    private List<CharacterMarvel> mCharacterList;
+    private final DataManager mDataManager;
+
+    public ListPresenter(@NonNull DataManager dataManager) {
+        mDataManager = dataManager;
+    }
 
     @Override
     public void onInitialListRequested() {
@@ -53,7 +58,7 @@ public class ListPresenter extends BasePresenter<ListContract.ListView> implemen
         if (!isViewAttached()) return;
         mView.showMessageLayout(false);
         mView.showProgress();
-        DataManager.getInstance().getCharactersList(offset, limit, searchQuery,
+        mDataManager.getCharactersList(offset, limit, searchQuery,
                 new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
                     @Override
                     public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
