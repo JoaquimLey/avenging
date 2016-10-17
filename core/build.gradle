@@ -20,9 +20,10 @@ android {
         }
     }
 
-    // ref https://github.com/square/okio/issues/58
     lintOptions {
+        // ref https://github.com/square/okio/issues/58
         warning 'InvalidPackage'
+        abortOnError false
     }
 
     buildTypes {
