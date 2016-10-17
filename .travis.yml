@@ -57,4 +57,5 @@ script:
   #- ./gradlew core:unitTests
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew mobile:build # as an example
+  - ./gradlew core:check
+  #- ./gradlew mobile:build # as an example

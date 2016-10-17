@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.joaquimley.avenging.R;
 import com.joaquimley.avenging.ui.character.CharacterActivity;
+import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.ui.list.ListContract;
 import com.joaquimley.core.ui.list.ListPresenter;
@@ -58,7 +59,7 @@ public class ListActivity extends Activity implements ListContract.ListView,
         setContentView(R.layout.activity_grid_pager_list);
         mListPresenter = (ListPresenter) getLastNonConfigurationInstance();
         if (mListPresenter == null) {
-            mListPresenter = new ListPresenter();
+            mListPresenter = new ListPresenter(DataManager.getInstance());
         }
         mListPresenter.attachView(this);
 
