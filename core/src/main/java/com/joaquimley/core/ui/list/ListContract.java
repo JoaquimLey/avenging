@@ -36,8 +36,5 @@ public interface ListContract {
         void showCharacters(List<CharacterMarvel> characterList);
 
         void showSearchedCharacters(List<CharacterMarvel> characterList);
-
     }
-
-
 }

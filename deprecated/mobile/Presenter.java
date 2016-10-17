@@ -16,16 +16,10 @@
 
 package com.joaquimley.core.ui.base;
 
-public interface RemotePresenterView extends BasePresenterView {
+@Deprecated
+public interface Presenter<V extends BasePresenterView> {
 
-    void showProgress();
+    void attachView(V presenterView);
 
-    void hideProgress();
-
-    void showError(String errorMessage);
-
-    void showEmpty();
-
-    void showMessageLayout(boolean show);
-
+    void detachView();
 }
