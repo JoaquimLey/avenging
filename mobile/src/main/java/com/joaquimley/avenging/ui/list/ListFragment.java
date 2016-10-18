@@ -203,7 +203,8 @@ public class ListFragment extends Fragment implements ListContract.ListView,
             mListCharacterAdapter.removeAll();
             mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_GALLERY);
         }
-        if(!mSwipeRefreshLayout.isActivated()) {
+
+        if (!mSwipeRefreshLayout.isActivated()) {
             mSwipeRefreshLayout.setEnabled(true);
         }
         mListCharacterAdapter.addItems(characterList);
@@ -216,7 +217,7 @@ public class ListFragment extends Fragment implements ListContract.ListView,
             mListCharacterAdapter.setViewType(ListAdapter.VIEW_TYPE_LIST);
 
         }
-        if(mSwipeRefreshLayout.isActivated()) {
+        if (mSwipeRefreshLayout.isActivated()) {
             mSwipeRefreshLayout.setEnabled(false);
         }
         mListCharacterAdapter.addItems(searchResults);
