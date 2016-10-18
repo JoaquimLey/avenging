@@ -31,19 +31,10 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
     private static final int SINGLE_ITEM_INDEX = 0;
 
     private DataManager mDataManager;
-
     private CharacterMarvel mCharacter;
-//    private List<Comic> mComicList;
-//    private List<Comic> mSeriesList;
-//    private List<Comic> mStoriesList;
-//    private List<Comic> mEventsList;
 
     public CharacterPresenter(DataManager dataManager) {
         mDataManager = dataManager;
-//        mComicList = new ArrayList<>();
-//        mSeriesList = new ArrayList<>();
-//        mStoriesList = new ArrayList<>();
-//        mEventsList = new ArrayList<>();
     }
 
     @Override
