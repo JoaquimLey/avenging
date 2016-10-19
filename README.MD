@@ -9,7 +9,7 @@
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
 
-###Read more on the blog post: < WIP - 1,121 words so far >
+###Read more on the blog post: [Avening - MVP without RxJava or Dagger](https://blog.joaquimley.com/avenging-android-mvp-23461aebe9b5#.sc9ty759u)
 
 Android app built with an **MVP** approach **without** RxJava or Dagger. 
 
