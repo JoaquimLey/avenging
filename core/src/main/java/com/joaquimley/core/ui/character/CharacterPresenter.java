@@ -28,7 +28,7 @@ import java.util.List;
 public class CharacterPresenter extends BasePresenter<CharacterContract.CharacterView> implements
         CharacterContract.ViewActions {
 
-    private static final int SINGLE_ITEM_INDEX = 0;
+    public static final int SINGLE_ITEM_INDEX = 0;
 
     private DataManager mDataManager;
     private CharacterMarvel mCharacter;
