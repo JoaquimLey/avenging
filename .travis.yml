@@ -54,8 +54,8 @@ before_script:
 script: 
   # Once tests written should run the gradle task for both Mobile and Wear
   # currently only doing a normal build to test Travis config
-  #- ./gradlew core:unitTests
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
   - ./gradlew core:check
-  #- ./gradlew mobile:build # as an example
+  #- ./gradlew mobile:check
+  #- ./gradlew wear:check

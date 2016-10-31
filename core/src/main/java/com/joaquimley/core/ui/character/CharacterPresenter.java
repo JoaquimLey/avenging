@@ -31,19 +31,10 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
     private static final int SINGLE_ITEM_INDEX = 0;
 
     private DataManager mDataManager;
-
     private CharacterMarvel mCharacter;
-//    private List<Comic> mComicList;
-//    private List<Comic> mSeriesList;
-//    private List<Comic> mStoriesList;
-//    private List<Comic> mEventsList;
 
     public CharacterPresenter(DataManager dataManager) {
         mDataManager = dataManager;
-//        mComicList = new ArrayList<>();
-//        mSeriesList = new ArrayList<>();
-//        mStoriesList = new ArrayList<>();
-//        mEventsList = new ArrayList<>();
     }
 
     @Override
@@ -83,6 +74,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mDataManager.getCharacter(id, new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
             @Override
             public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
+                if (!isViewAttached()) return;
                 mView.hideProgress();
                 if (response.getData().getResults().isEmpty()) {
                     mView.showError("Character does not exist");
@@ -94,11 +86,13 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
             @Override
             public void onUnauthorized() {
+                if (!isViewAttached()) return;
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
+                if (!isViewAttached()) return;
                 mView.showError(throwable.getMessage());
             }
         });
@@ -112,6 +106,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mDataManager.getComics(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
+                if (!isViewAttached()) return;
                 mView.hideProgress();
                 if (response.getData().getResults().isEmpty()) {
                     mView.showError("Character has no comics");
@@ -122,11 +117,13 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
             @Override
             public void onUnauthorized() {
+                if (!isViewAttached()) return;
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
+                if (!isViewAttached()) return;
                 mView.showError(throwable.getMessage());
             }
         });
@@ -140,6 +137,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mDataManager.getSeries(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
+                if (!isViewAttached()) return;
                 mView.hideProgress();
                 if (response.getData().getResults().isEmpty()) {
                     mView.showError("Character has no series");
@@ -150,11 +148,13 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
             @Override
             public void onUnauthorized() {
+                if (!isViewAttached()) return;
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
+                if (!isViewAttached()) return;
                 mView.showError(throwable.getMessage());
             }
         });
@@ -168,6 +168,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mDataManager.getStories(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
+                if (!isViewAttached()) return;
                 mView.hideProgress();
                 if (response.getData().getResults().isEmpty()) {
                     mView.showError("Character has no stories");
@@ -178,11 +179,13 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
             @Override
             public void onUnauthorized() {
+                if (!isViewAttached()) return;
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
+                if (!isViewAttached()) return;
                 mView.showError(throwable.getMessage());
             }
         });
@@ -196,6 +199,7 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
         mDataManager.getEvents(id, offset, limit, new RemoteCallback<DataWrapper<List<Comic>>>() {
             @Override
             public void onSuccess(DataWrapper<List<Comic>> response) {
+                if (!isViewAttached()) return;
                 mView.hideProgress();
                 if (response.getData().getResults().isEmpty()) {
                     mView.showError("Character has no events");
@@ -206,11 +210,13 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
 
             @Override
             public void onUnauthorized() {
+                if (!isViewAttached()) return;
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
+                if (!isViewAttached()) return;
                 mView.showError(throwable.getMessage());
             }
         });

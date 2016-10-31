@@ -22,7 +22,7 @@ import com.joaquimley.core.data.model.Comic;
 
 import java.util.List;
 
-public interface CharacterContract extends RemoteView {
+public interface CharacterContract {
 
     interface ViewActions {
 

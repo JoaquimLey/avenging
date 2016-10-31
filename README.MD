@@ -2,14 +2,14 @@
 
 #Avenging - MVP project
 
-[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Avenging-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/4545)
 [![Gitter room](https://img.shields.io/gitter/room/badges/shields.svg?style=false)](https://gitter.im/joaquimley/avenging)
 [![Build Status](https://travis-ci.org/JoaquimLey/avenging.svg?branch=development)](https://travis-ci.org/JoaquimLey/avenging)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fa075cf6a50a4bc0b875406842f1496a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JoaquimLey/avenging&amp;utm_campaign=Badge_Grade)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
 
-###Read more on the blog post: < soon >
+###Read more on the blog post: [Avening - MVP without RxJava or Dagger](https://blog.joaquimley.com/avenging-android-mvp-23461aebe9b5#.sc9ty759u)
 
 Android app built with an **MVP** approach **without** RxJava or Dagger. 
 
@@ -25,8 +25,7 @@ What is MVP (ModelViewPresenter)?
 
 Most of the modern Android applications just use View-Model architecture.
 Programmers are involved into fight with View complexities instead of solving business tasks.
-Using only Model-View in your application you usually end up with "everything is connected with everything", which translates into harder scalability. With the MVP approach it easier to understand the role of each element, stop wasting time on boring code maintenance and use it to build awesome stuff! 
-
+Using only Model-View in your application you usually end up with "everything is connected with everything", which translates into harder scalability. With the MVP approach it easier to understand the role of each element. You didn’t became a developer to be wasting time on boring code maintenance, but to build awesome stuff!
 
 ![Mobile List](../development/art/ss_mobile_list.png) 
 ![Mobile Profile](../development/art/ss_mobile_profile.png) 
