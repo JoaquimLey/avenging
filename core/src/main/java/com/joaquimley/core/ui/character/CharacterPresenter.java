@@ -87,12 +87,14 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
             @Override
             public void onUnauthorized() {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showError(throwable.getMessage());
             }
         });
@@ -118,12 +120,14 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
             @Override
             public void onUnauthorized() {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showError(throwable.getMessage());
             }
         });
@@ -149,12 +153,14 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
             @Override
             public void onUnauthorized() {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showError(throwable.getMessage());
             }
         });
@@ -180,12 +186,14 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
             @Override
             public void onUnauthorized() {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showError(throwable.getMessage());
             }
         });
@@ -211,12 +219,14 @@ public class CharacterPresenter extends BasePresenter<CharacterContract.Characte
             @Override
             public void onUnauthorized() {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showUnauthorizedError();
             }
 
             @Override
             public void onFailed(Throwable throwable) {
                 if (!isViewAttached()) return;
+                mView.hideProgress();
                 mView.showError(throwable.getMessage());
             }
         });

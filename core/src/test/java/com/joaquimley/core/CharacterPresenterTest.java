@@ -41,6 +41,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 
@@ -71,13 +72,15 @@ public class CharacterPresenterTest {
     @Test
     public void characterRequested_Success() {
 
+        long characterId = 1L;
+
         List<CharacterMarvel> results = Collections.singletonList(new CharacterMarvel());
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onCharacterRequested(anyLong());
+        mPresenter.onCharacterRequested(characterId);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -96,7 +99,9 @@ public class CharacterPresenterTest {
     @Test
     public void characterRequested_Unauthorized() {
 
-        mPresenter.onCharacterRequested(anyLong());
+        long characterId = 1L;
+
+        mPresenter.onCharacterRequested(characterId);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -113,7 +118,9 @@ public class CharacterPresenterTest {
     @Test
     public void characterRequested_Failed() {
 
-        mPresenter.onCharacterRequested(anyLong());
+        long characterId = 1L;
+
+        mPresenter.onCharacterRequested(characterId);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -131,13 +138,16 @@ public class CharacterPresenterTest {
     @Test
     public void characterComicListRequested_Success() {
 
+        long characterId = 1L;
+        int limit = 30;
+
         List<Comic> results = asList(new Comic(), new Comic());
         DataContainer<List<Comic>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<Comic>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onCharacterComicsRequested(anyLong(), anyInt());
+        mPresenter.onCharacterComicsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -153,7 +163,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterComicListRequested_NoResult() {
 
-        mPresenter.onCharacterComicsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterComicsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -169,14 +182,17 @@ public class CharacterPresenterTest {
         mGetComicListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
-        inOrder.verify(mView).showEmpty();
+        inOrder.verify(mView).showError(anyString());
     }
 
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
     @Test
     public void characterComicListRequested_Unauthorized() {
 
-        mPresenter.onCharacterComicsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterComicsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -193,7 +209,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterComicListRequested_Failed() {
 
-        mPresenter.onCharacterComicsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterComicsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -211,13 +230,16 @@ public class CharacterPresenterTest {
     @Test
     public void characterSeriesListRequested_Success() {
 
+        long characterId = 1L;
+        int limit = 30;
+
         List<Comic> results = asList(new Comic(), new Comic());
         DataContainer<List<Comic>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<Comic>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onCharacterSeriesRequested(anyLong(), anyInt());
+        mPresenter.onCharacterSeriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -233,7 +255,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterSeriesListRequested_NoResult() {
 
-        mPresenter.onCharacterSeriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterSeriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -249,14 +274,17 @@ public class CharacterPresenterTest {
         mGetComicListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
-        inOrder.verify(mView).showEmpty();
+        inOrder.verify(mView).showError(anyString());
     }
 
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
     @Test
     public void characterSeriesListRequested_Unauthorized() {
 
-        mPresenter.onCharacterSeriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterSeriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -273,7 +301,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterSeriesListRequested_Failed() {
 
-        mPresenter.onCharacterSeriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterSeriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -292,13 +323,16 @@ public class CharacterPresenterTest {
     @Test
     public void characterStoriesListRequested_Success() {
 
+        long characterId = 1L;
+        int limit = 30;
+
         List<Comic> results = asList(new Comic(), new Comic());
         DataContainer<List<Comic>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<Comic>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onCharacterStoriesRequested(anyLong(), anyInt());
+        mPresenter.onCharacterStoriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -314,7 +348,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterStoriesListRequested_NoResult() {
 
-        mPresenter.onCharacterStoriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterStoriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -330,14 +367,17 @@ public class CharacterPresenterTest {
         mGetComicListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
-        inOrder.verify(mView).showEmpty();
+        inOrder.verify(mView).showError(anyString());
     }
 
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
     @Test
     public void characterStoriesListRequested_Unauthorized() {
 
-        mPresenter.onCharacterStoriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterStoriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -354,7 +394,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterStoriesListRequested_Failed() {
 
-        mPresenter.onCharacterStoriesRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterStoriesRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -372,13 +415,16 @@ public class CharacterPresenterTest {
     @Test
     public void characterEventsListRequested_Success() {
 
+        long characterId = 1L;
+        int limit = 30;
+
         List<Comic> results = asList(new Comic(), new Comic());
         DataContainer<List<Comic>> data = new DataContainer<>();
         data.setResults(results);
         DataWrapper<List<Comic>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onCharacterEventsRequested(anyLong(), anyInt());
+        mPresenter.onCharacterEventsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -394,7 +440,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterEventsListRequested_NoResult() {
 
-        mPresenter.onCharacterEventsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterEventsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -410,14 +459,17 @@ public class CharacterPresenterTest {
         mGetComicListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
-        inOrder.verify(mView).showEmpty();
+        inOrder.verify(mView).showError(anyString());
     }
 
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
     @Test
     public void characterEventsListRequested_Unauthorized() {
 
-        mPresenter.onCharacterEventsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterEventsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -434,7 +486,10 @@ public class CharacterPresenterTest {
     @Test
     public void characterEventsListRequested_Failed() {
 
-        mPresenter.onCharacterEventsRequested(anyLong(), anyInt());
+        long characterId = 1L;
+        int limit = 30;
+
+        mPresenter.onCharacterEventsRequested(characterId, limit);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
