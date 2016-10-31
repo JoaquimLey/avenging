@@ -102,7 +102,8 @@ public class ListPresenterTest {
         inOrder.verify(mView).showProgress();
 
         when(TextUtils.isEmpty(searchQuery)).thenReturn(true);
-        verify(mDataManager).getCharactersList(anyInt(), anyInt(), searchQuery, mGetCharactersListCallbackCaptor.capture());
+
+        verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery), mGetCharactersListCallbackCaptor.capture());
         mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
 
         inOrder.verify(mView).hideProgress();
@@ -120,6 +121,8 @@ public class ListPresenterTest {
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
         inOrder.verify(mView).showProgress();
+
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(true);
 
         verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery),
                 mGetCharactersListCallbackCaptor.capture());
@@ -156,6 +159,8 @@ public class ListPresenterTest {
     public void listEndReachedNoSearchQuery_Success() {
 
         String searchQuery = null;
+        int offset = 2;
+        int limit = 30;
         List<CharacterMarvel> results = asList(new CharacterMarvel(), new CharacterMarvel());
 
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
@@ -164,7 +169,7 @@ public class ListPresenterTest {
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -180,11 +185,14 @@ public class ListPresenterTest {
         inOrder.verify(mView).showCharacters(response.getData().getResults());
     }
 
-
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void listEndReachedNoSearchQuery_NoResult() {
 
         String searchQuery = null;
+        int offset = 2;
+        int limit = 30;
+
         List<CharacterMarvel> results = Collections.emptyList();
 
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
@@ -193,11 +201,13 @@ public class ListPresenterTest {
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
         inOrder.verify(mView).showProgress();
+
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(true);
 
         verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery),
                 mGetCharactersListCallbackCaptor.capture());
@@ -212,8 +222,10 @@ public class ListPresenterTest {
     public void listEndReachedNoSearchQuery_Unauthorized() {
 
         String searchQuery = null;
+        int offset = 2;
+        int limit = 30;
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -232,8 +244,10 @@ public class ListPresenterTest {
     public void listEndReachedNoSearchQuery_Failed() {
 
         String searchQuery = null;
+        int offset = 2;
+        int limit = 30;
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -253,6 +267,8 @@ public class ListPresenterTest {
     public void listEndReachedSearchQuery_Success() {
 
         String searchQuery = "query";
+        int offset = 2;
+        int limit = 30;
 
         List<CharacterMarvel> results = asList(new CharacterMarvel(), new CharacterMarvel());
 
@@ -262,7 +278,7 @@ public class ListPresenterTest {
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -282,7 +298,10 @@ public class ListPresenterTest {
     public void listEndReachedSearchQuery_NoResult() {
 
         String searchQuery = "query";
-        List<CharacterMarvel> results = asList(new CharacterMarvel(), new CharacterMarvel());
+        int offset = 2;
+        int limit = 30;
+
+        List<CharacterMarvel> results = Collections.emptyList();
 
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
         data.setResults(results);
@@ -290,12 +309,13 @@ public class ListPresenterTest {
         DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
         response.setData(data);
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
         inOrder.verify(mView).showProgress();
 
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(false);
         verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery),
                 mGetCharactersListCallbackCaptor.capture());
         mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
@@ -309,8 +329,10 @@ public class ListPresenterTest {
     public void listEndReachedSearchQuery_Unauthorized() {
 
         String searchQuery = "query";
+        int offset = 2;
+        int limit = 30;
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -329,8 +351,10 @@ public class ListPresenterTest {
     public void listEndReachedSearchQuery_Failed() {
 
         String searchQuery = "query";
+        int offset = 2;
+        int limit = 30;
 
-        mPresenter.onListEndReached(anyInt(), anyInt(), searchQuery);
+        mPresenter.onListEndReached(offset, limit, searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -393,6 +417,8 @@ public class ListPresenterTest {
         inOrder.verify(mView).showMessageLayout(false);
         inOrder.verify(mView).showProgress();
 
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(false);
+
         verify(mDataManager).getCharactersList(anyInt(), anyInt(), eq(searchQuery),
                 mGetCharactersListCallbackCaptor.capture());
         mGetCharactersListCallbackCaptor.getValue().onSuccess(response);
@@ -407,7 +433,8 @@ public class ListPresenterTest {
 
         String searchQuery = "query";
 
-        mPresenter.onInitialListRequested();
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(false);
+        mPresenter.onCharacterSearched(searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
@@ -426,8 +453,8 @@ public class ListPresenterTest {
     public void characterListSearchedRequested_Failed() {
 
         String searchQuery = "query";
-
-        mPresenter.onInitialListRequested();
+        when(TextUtils.isEmpty(searchQuery)).thenReturn(false);
+        mPresenter.onCharacterSearched(searchQuery);
 
         InOrder inOrder = inOrder(mView);
         inOrder.verify(mView).showMessageLayout(false);
