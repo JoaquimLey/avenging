@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.joaquimley.avenging.R;
+import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.ui.character.CharacterContract;
@@ -61,7 +62,7 @@ public class CharacterActivity extends Activity implements CharacterContract.Cha
         setContentView(R.layout.activity_list);
 
         mCharacter = getIntent().getExtras().getParcelable(EXTRA_CHARACTER);
-        mCharacterPresenter = new CharacterPresenter();
+        mCharacterPresenter = new CharacterPresenter(DataManager.getInstance());
         mCharacterPresenter.attachView(this);
 
         initViews();
