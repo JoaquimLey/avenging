@@ -21,7 +21,7 @@ import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataContainer;
 import com.joaquimley.core.data.model.DataWrapper;
-import com.joaquimley.core.ui.base.RemoteCallback;
+import com.joaquimley.core.data.network.RemoteCallback;
 import com.joaquimley.core.ui.character.CharacterContract;
 import com.joaquimley.core.ui.character.CharacterPresenter;
 
@@ -52,6 +52,9 @@ public class CharacterPresenterTest {
     private DataManager mDataManager;
 
     @Mock
+    private Character mCharacter;
+
+    @Mock
     private CharacterContract.CharacterView mView;
 
     @Captor
@@ -73,6 +76,33 @@ public class CharacterPresenterTest {
     public void characterRequested_Success() {
 
         long characterId = 1L;
+
+        List<CharacterMarvel> results = Collections.singletonList(new CharacterMarvel());
+        DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
+        data.setResults(results);
+        DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
+        response.setData(data);
+
+        mPresenter.onCharacterRequested(characterId);
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+
+        verify(mDataManager).getCharacter(anyLong(), mGetCharacterCallbackCaptor.capture());
+        mGetCharacterCallbackCaptor.getValue().onSuccess(response);
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showCharacter(response.getData().getResults()
+                .get(CharacterPresenter.SINGLE_ITEM_INDEX));
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void characterRequested_IdNull() {
+
+        Long characterId = null;
 
         List<CharacterMarvel> results = Collections.singletonList(new CharacterMarvel());
         DataContainer<List<CharacterMarvel>> data = new DataContainer<>();

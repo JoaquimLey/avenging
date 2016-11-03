@@ -21,7 +21,7 @@ import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.ui.base.BasePresenter;
-import com.joaquimley.core.ui.base.RemoteCallback;
+import com.joaquimley.core.data.network.RemoteCallback;
 
 import java.util.List;
 
