@@ -16,7 +16,6 @@
 
 package com.joaquimley.avenging.ui.list;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,7 +33,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Slide;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,7 +61,7 @@ public class ListFragment extends Fragment implements ListContract.ListView,
     private static final int TAB_LAYOUT_ITEM_SPAN_SIZE = 1;
     private static final int SCREEN_TABLET_DP_WIDTH = 600;
 
-    private Context mActivity;
+    private AppCompatActivity mActivity;
     private ListPresenter mListPresenter;
     private ListAdapter mListCharacterAdapter;
     private String mSearchQuery;
@@ -119,8 +117,8 @@ public class ListFragment extends Fragment implements ListContract.ListView,
     }
 
     private void initViews(View view) {
-        mActivity = getActivity().getApplicationContext();
-        ((AppCompatActivity) getActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        mActivity = (AppCompatActivity) getActivity();
+        mActivity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
 
         mCharactersRecycler = (RecyclerView) view.findViewById(R.id.recycler_characters);
         mCharactersRecycler.setHasFixedSize(true);
@@ -276,7 +274,7 @@ public class ListFragment extends Fragment implements ListContract.ListView,
     }
 
     private Bundle makeTransitionBundle(View sharedElementView) {
-        return ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+        return ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity,
                 sharedElementView, ViewCompat.getTransitionName(sharedElementView)).toBundle();
     }
 
