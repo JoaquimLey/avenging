@@ -25,6 +25,7 @@ import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.data.network.MarvelService;
 import com.joaquimley.core.data.network.MarvelServiceFactory;
+import com.joaquimley.core.ui.base.RemoteCallback;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -34,7 +35,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * Api abstraction
@@ -57,14 +57,14 @@ public class DataManager {
     }
 
     public void getCharactersList(int offSet, int limit, String searchQuery,
-                                  Callback<DataWrapper<List<CharacterMarvel>>> listener) {
+                                  RemoteCallback<DataWrapper<List<CharacterMarvel>>> listener) {
         long timeStamp = System.currentTimeMillis();
         mMarvelService.getCharacters(BuildConfig.PUBLIC_KEY,
                 buildMd5AuthParameter(timeStamp), timeStamp, offSet, limit, searchQuery)
                 .enqueue(listener);
     }
 
-    public void getCharacter(long characterId, Callback<DataWrapper<List<CharacterMarvel>>> listener) {
+    public void getCharacter(long characterId, RemoteCallback<DataWrapper<List<CharacterMarvel>>> listener) {
         long timeStamp = System.currentTimeMillis();
         mMarvelService.getCharacter(characterId, BuildConfig.PUBLIC_KEY,
                 buildMd5AuthParameter(timeStamp), timeStamp)
@@ -77,29 +77,30 @@ public class DataManager {
     private static final String COMIC_TYPE_STORIES = "stories";
     private static final String COMIC_TYPE_EVENTS = "events";
 
+
     @StringDef({COMIC_TYPE_COMICS, COMIC_TYPE_SERIES, COMIC_TYPE_STORIES, COMIC_TYPE_EVENTS})
     @Retention(RetentionPolicy.SOURCE)
     private @interface Type {
     }
 
-    public void getComics(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getComics(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_COMICS, offset, limit).enqueue(listener);
     }
 
-    public void getSeries(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getSeries(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_SERIES, offset, limit).enqueue(listener);
     }
 
-    public void getStories(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getStories(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_STORIES, offset, limit).enqueue(listener);
     }
 
-    public void getEvents(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getEvents(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_EVENTS, offset, limit).enqueue(listener);
     }
 
     /**
-     * Base request to prevent boilerplate
+     * Base request to prevent code duplication
      *
      * @param id        {@link CharacterMarvel} Id
      * @param comicType Which {@link .Type} list should be requested
