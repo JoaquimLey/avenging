@@ -6,7 +6,7 @@ import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.DataContainer;
 import com.joaquimley.core.data.model.DataWrapper;
-import com.joaquimley.core.ui.base.RemoteCallback;
+import com.joaquimley.core.data.network.RemoteCallback;
 import com.joaquimley.core.ui.list.ListContract;
 import com.joaquimley.core.ui.list.ListPresenter;
 

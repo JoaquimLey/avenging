@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.joaquimley.core.ui.base;
+package com.joaquimley.core.data.network;
 
 import java.net.HttpURLConnection;
 

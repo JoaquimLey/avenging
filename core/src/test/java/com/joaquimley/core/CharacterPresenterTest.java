@@ -21,7 +21,7 @@ import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataContainer;
 import com.joaquimley.core.data.model.DataWrapper;
-import com.joaquimley.core.ui.base.RemoteCallback;
+import com.joaquimley.core.data.network.RemoteCallback;
 import com.joaquimley.core.ui.character.CharacterContract;
 import com.joaquimley.core.ui.character.CharacterPresenter;
 
@@ -33,6 +33,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Collections;
@@ -50,6 +51,9 @@ public class CharacterPresenterTest {
 
     @Mock
     private DataManager mDataManager;
+
+    @Mock
+    private Character mCharacter;
 
     @Mock
     private CharacterContract.CharacterView mView;
@@ -95,6 +99,34 @@ public class CharacterPresenterTest {
                 .get(CharacterPresenter.SINGLE_ITEM_INDEX));
     }
 
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void characterRequested_SameId() {
+
+        Long characterId = 1L;
+        CharacterMarvel characterMarvel = new CharacterMarvel();
+        characterMarvel.setId(characterId);
+        List<CharacterMarvel> results = Collections.singletonList(characterMarvel);
+        DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
+        data.setResults(results);
+        DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
+        response.setData(data);
+
+        mPresenter.onCharacterRequested(characterId);
+        verify(mDataManager).getCharacter(anyLong(), mGetCharacterCallbackCaptor.capture());
+        mGetCharacterCallbackCaptor.getValue().onSuccess(response);
+        verify(mView).showCharacter(response.getData().getResults()
+                .get(CharacterPresenter.SINGLE_ITEM_INDEX));
+
+        mPresenter.onCharacterRequested(characterId);
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showCharacter(response.getData().getResults()
+                .get(CharacterPresenter.SINGLE_ITEM_INDEX));
+        verify(mView, Mockito.times(1)).showProgress();
+    }
+
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
     @Test
     public void characterRequested_Unauthorized() {
@@ -112,6 +144,30 @@ public class CharacterPresenterTest {
 
         inOrder.verify(mView).hideProgress();
         inOrder.verify(mView).showUnauthorizedError();
+    }
+
+    @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})
+    @Test
+    public void characterRequested_Empty() {
+
+        long characterId = 1L;
+        List<CharacterMarvel> results = Collections.emptyList();
+        DataContainer<List<CharacterMarvel>> data = new DataContainer<>();
+        data.setResults(results);
+        DataWrapper<List<CharacterMarvel>> response = new DataWrapper<>();
+        response.setData(data);
+
+        mPresenter.onCharacterRequested(characterId);
+
+        InOrder inOrder = inOrder(mView);
+        inOrder.verify(mView).showMessageLayout(false);
+        inOrder.verify(mView).showProgress();
+
+        verify(mDataManager).getCharacter(anyLong(), mGetCharacterCallbackCaptor.capture());
+        mGetCharacterCallbackCaptor.getValue().onSuccess(response);
+
+        inOrder.verify(mView).hideProgress();
+        inOrder.verify(mView).showError(anyString());
     }
 
     @SuppressWarnings({"ConstantConditions", "ThrowableInstanceNeverThrown"})

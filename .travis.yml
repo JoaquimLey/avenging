@@ -56,6 +56,4 @@ script:
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew core:check
-  #- ./gradlew mobile:check
-  #- ./gradlew wear:check
+  -  ./gradlew core:test --info
