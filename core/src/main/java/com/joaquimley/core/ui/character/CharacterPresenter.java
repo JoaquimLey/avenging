@@ -20,8 +20,8 @@ import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataWrapper;
-import com.joaquimley.core.ui.base.BasePresenter;
 import com.joaquimley.core.data.network.RemoteCallback;
+import com.joaquimley.core.ui.base.BasePresenter;
 
 import java.util.List;
 
