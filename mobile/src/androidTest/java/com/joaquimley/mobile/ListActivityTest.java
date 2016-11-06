@@ -14,16 +14,21 @@
  * limitations under the License.
  */
 
-package com.joaquimley.core;
+package com.joaquimley.mobile;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
+import com.joaquimley.avenging.ui.list.ListActivity;
+
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
+public class ListActivityTest {
+
+    @Rule
+    public ActivityTestRule<ListActivity> mActivityRule = new ActivityTestRule<>(ListActivity.class);
+
+
 }

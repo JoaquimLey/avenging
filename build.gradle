@@ -40,7 +40,8 @@ allprojects {
         junitVersion = '4.12'
         mockitoVersion = '1.10.19'
         powermockVersion = '1.6.4'
-        espressoVersion = '2.2.1'
+        espressoVersion = '2.2.2'
+        testRunnerVersion = '0.5'
 
         supportLibraryVersion = '24.2.1'
         playServicesVersion = '9.4.0'
