@@ -16,12 +16,13 @@
 
 package com.joaquimley.mobile;
 
+import android.content.Intent;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.joaquimley.avenging.R;
-import com.joaquimley.avenging.ui.list.ListActivity;
+import com.joaquimley.avenging.ui.character.CharacterActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,12 +38,18 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class ListActivityTest {
+public class CharacterActivityTest {
 
     @Rule
-    public ActivityTestRule<ListActivity> mActivityRule = new ActivityTestRule<>(ListActivity.class);
+    public ActivityTestRule<CharacterActivity> mActivityRule = new ActivityTestRule<CharacterActivity>
+            (CharacterActivity.class) {
+        @Override
+        protected Intent getActivityIntent() {
+            return super.getActivityIntent().putExtra("Cenas", "Cenas");
+        }
+    };
 
-    private ListActivity mActivity;
+    private CharacterActivity mActivity;
 
     @Before
     public void setup() {

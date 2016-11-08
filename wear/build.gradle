@@ -18,6 +18,7 @@ android {
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
+            testCoverageEnabled true
         }
 
         release {

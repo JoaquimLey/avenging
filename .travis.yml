@@ -4,7 +4,7 @@ jdk:
   # Jdk version used by your project
   - oraclejdk8
 
-sudo: false
+sudo: false # faster builds
 
 android:
   components:
@@ -50,10 +50,24 @@ before_script:
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
 
+# Build, and run tests
+script:
+  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 #Build, and run tests
-script: 
+#script: 
   # Once tests written should run the gradle task for both Mobile and Wear
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  -  ./gradlew core:test --info
+#  -  ./gradlew core:test --info
+
+#after_success:
+#  - bash <(curl -s https://codecov.io/bash)
