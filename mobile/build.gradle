@@ -54,4 +54,10 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion") {
         exclude module: 'support-annotations'
     }
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espressoVersion") {
+        exclude module: 'design'
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }

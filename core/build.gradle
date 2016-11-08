@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion project.compileSdkVersion
@@ -10,11 +11,9 @@ android {
         targetSdkVersion 24
 
         if (System.getenv().containsKey("IS_CI_JOB")) {
-            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
             buildConfigField("String", "PUBLIC_KEY", "\"" + System.getenv("CI_PUBLIC_KEY") + "\"")
             buildConfigField("String", "PRIVATE_KEY", "\"" + System.getenv("CI_PRIVATE_KEY") + "\"")
         } else {
-            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"${marvelProductionEndpoint}\"")
             buildConfigField("String", "PUBLIC_KEY", "\"${marvelPublicKey}\"")
             buildConfigField("String", "PRIVATE_KEY", "\"${marvelPrivateKey}\"")
         }

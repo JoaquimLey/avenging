@@ -30,6 +30,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class MarvelServiceFactory {
 
+    private static final String BASE_URL = "http://gateway.marvel.com/v1/public/";
     private static final int HTTP_READ_TIMEOUT = 10000;
     private static final int HTTP_CONNECT_TIMEOUT = 6000;
 
@@ -39,7 +40,7 @@ public class MarvelServiceFactory {
 
     private static MarvelService makeMarvelService(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.PRODUCTION_ENDPOINT)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

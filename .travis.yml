@@ -50,14 +50,15 @@ before_script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
-#Build, and run tests
+# Build, and run tests
 script: 
   # Once tests written should run the gradle task for both Mobile and Wear
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew core:test --info
-  - ./gradlew core:jacocoTestReport 
+  # -  ./gradlew core:test --info
+  - ./gradlew core:jacocoTestReport
 
+# Codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)

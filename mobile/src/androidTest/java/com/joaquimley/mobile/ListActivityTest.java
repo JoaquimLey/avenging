@@ -17,6 +17,7 @@
 package com.joaquimley.mobile;
 
 import android.support.test.espresso.assertion.ViewAssertions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -42,16 +43,12 @@ public class ListActivityTest {
     @Rule
     public ActivityTestRule<ListActivity> mActivityRule = new ActivityTestRule<>(ListActivity.class);
 
-    private ListActivity mActivity;
-
     @Before
     public void setup() {
-        mActivity = mActivityRule.getActivity();
     }
 
     @After
     public void tearDown() {
-        mActivity = null;
     }
 
     @Test
@@ -73,5 +70,12 @@ public class ListActivityTest {
 
         onView(withId(R.id.search_src_text))
                 .check(ViewAssertions.matches(isDisplayed()));
+    }
+
+    @Test
+    public void onItemClicked_CorrectItemDisplayed() {
+        // Click item at position 3
+        onView(withId(R.id.recycler_characters))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
     }
 }
