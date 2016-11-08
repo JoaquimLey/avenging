@@ -5,6 +5,7 @@
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Gitter room](https://img.shields.io/gitter/room/badges/shields.svg?style=false)](https://gitter.im/joaquimley/avenging)
 [![Build Status](https://travis-ci.org/JoaquimLey/avenging.svg?branch=development)](https://travis-ci.org/JoaquimLey/avenging)
+[![codecov](https://codecov.io/gh/JoaquimLey/avenging/branch/development/graph/badge.svg)](https://codecov.io/gh/JoaquimLey/avenging)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fa075cf6a50a4bc0b875406842f1496a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JoaquimLey/avenging&amp;utm_campaign=Badge_Grade)
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)

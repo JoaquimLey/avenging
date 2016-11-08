@@ -57,4 +57,9 @@ script:
   #- ./gradlew core:unitTests
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew mobile:build # as an example
+  #- ./gradlew mobile:build # as an example
+  - ./gradlew core:jacocoTestReport
+
+#Codecov
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
