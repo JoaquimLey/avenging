@@ -8,8 +8,8 @@ android {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.2"
     }
 
     buildTypes {
@@ -18,13 +18,20 @@ android {
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
     debugCompile project(path: ':core', configuration: 'debug')
     releaseCompile project(path: ':core', configuration: 'release')
 
-    final PLAY_SERVICES_WEARABLE_VERSION = '9.6.0'
+    final PLAY_SERVICES_WEARABLE_VERSION = '9.8.0'
     final SUPPORT_WEARABLE_VERSION = '2.0.0-alpha1'
 
     compile "com.squareup.picasso:picasso:$picassoVersion"

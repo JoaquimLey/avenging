@@ -8,8 +8,8 @@ android {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 4
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.2"
     }
 
     lintOptions {
@@ -28,7 +28,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'

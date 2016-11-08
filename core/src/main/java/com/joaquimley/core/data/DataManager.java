@@ -25,6 +25,7 @@ import com.joaquimley.core.data.model.Comic;
 import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.data.network.MarvelService;
 import com.joaquimley.core.data.network.MarvelServiceFactory;
+import com.joaquimley.core.data.network.RemoteCallback;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -34,7 +35,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * Api abstraction
@@ -57,14 +57,14 @@ public class DataManager {
     }
 
     public void getCharactersList(int offSet, int limit, String searchQuery,
-                                  Callback<DataWrapper<List<CharacterMarvel>>> listener) {
+                                  RemoteCallback<DataWrapper<List<CharacterMarvel>>> listener) {
         long timeStamp = System.currentTimeMillis();
         mMarvelService.getCharacters(BuildConfig.PUBLIC_KEY,
                 buildMd5AuthParameter(timeStamp), timeStamp, offSet, limit, searchQuery)
                 .enqueue(listener);
     }
 
-    public void getCharacter(long characterId, Callback<DataWrapper<List<CharacterMarvel>>> listener) {
+    public void getCharacter(long characterId, RemoteCallback<DataWrapper<List<CharacterMarvel>>> listener) {
         long timeStamp = System.currentTimeMillis();
         mMarvelService.getCharacter(characterId, BuildConfig.PUBLIC_KEY,
                 buildMd5AuthParameter(timeStamp), timeStamp)
@@ -77,29 +77,30 @@ public class DataManager {
     private static final String COMIC_TYPE_STORIES = "stories";
     private static final String COMIC_TYPE_EVENTS = "events";
 
+
     @StringDef({COMIC_TYPE_COMICS, COMIC_TYPE_SERIES, COMIC_TYPE_STORIES, COMIC_TYPE_EVENTS})
     @Retention(RetentionPolicy.SOURCE)
     private @interface Type {
     }
 
-    public void getComics(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getComics(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_COMICS, offset, limit).enqueue(listener);
     }
 
-    public void getSeries(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getSeries(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_SERIES, offset, limit).enqueue(listener);
     }
 
-    public void getStories(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getStories(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_STORIES, offset, limit).enqueue(listener);
     }
 
-    public void getEvents(long characterId, Integer offset, Integer limit, Callback<DataWrapper<List<Comic>>> listener) {
+    public void getEvents(long characterId, Integer offset, Integer limit, RemoteCallback<DataWrapper<List<Comic>>> listener) {
         getComicListByType(characterId, COMIC_TYPE_EVENTS, offset, limit).enqueue(listener);
     }
 
     /**
-     * Base request to prevent boilerplate
+     * Base request to prevent code duplication
      *
      * @param id        {@link CharacterMarvel} Id
      * @param comicType Which {@link .Type} list should be requested
@@ -137,72 +138,3 @@ public class DataManager {
         }
     }
 }
-
-/**
- * -- Request response list --
- * 409	Limit greater than 100.
- * 409	Limit invalid or below 1.
- * 409	Invalid or unrecognized parameter.
- * 409	Empty parameter.
- * 409	Invalid or unrecognized ordering parameter.
- * 409	Too many values sent to a multi-value list filter.
- * 409	Invalid value passed to filter.
- * <p/>
- * <p/>
- * -- Authorization --
- * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- * 403	Forbidden
- * <p/>
- * -- Authorization --
- * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- * 403	Forbidden
- * <p/>
- * -- Authorization --
- * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- * 403	Forbidden
- * <p/>
- * -- Authorization --
- * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- * 403	Forbidden
- * <p>
- * -- Authorization --
- * 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- * 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- * 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- * 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- * 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- * 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- * 403	Forbidden
- */
-
-/**
- -- Authorization --
- 409	Missing API Key	Occurs when the apikey parameter is not included with a request.
- 409	Missing Hash	Occurs when an apikey parameter is included with a request, a ts parameter is present, but no hash parameter is sent. Occurs on server-side applications only.
- 409	Missing Timestamp	Occurs when an apikey parameter is included with a request, a hash parameter is present, but no ts parameter is sent. Occurs on server-side applications only.
- 401	Invalid Referer	Occurs when a referrer which is not valid for the passed apikey parameter is sent.
- 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
- 405	Method Not Allowed	Occurs when an API endpoint is accessed using an HTTP verb which is not allowed for that endpoint.
- 403	Forbidden
-
- */

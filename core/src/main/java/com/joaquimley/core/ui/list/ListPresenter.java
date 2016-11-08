@@ -24,7 +24,7 @@ import com.joaquimley.core.data.DataManager;
 import com.joaquimley.core.data.model.CharacterMarvel;
 import com.joaquimley.core.data.model.DataWrapper;
 import com.joaquimley.core.ui.base.BasePresenter;
-import com.joaquimley.core.ui.base.RemoteCallback;
+import com.joaquimley.core.data.network.RemoteCallback;
 
 import java.util.List;
 
@@ -62,6 +62,7 @@ public class ListPresenter extends BasePresenter<ListContract.ListView> implemen
                 new RemoteCallback<DataWrapper<List<CharacterMarvel>>>() {
                     @Override
                     public void onSuccess(DataWrapper<List<CharacterMarvel>> response) {
+                        if (!isViewAttached()) return;
                         mView.hideProgress();
                         List<CharacterMarvel> responseResults = response.getData().getResults();
                         if (responseResults.isEmpty()) {
@@ -78,12 +79,14 @@ public class ListPresenter extends BasePresenter<ListContract.ListView> implemen
 
                     @Override
                     public void onUnauthorized() {
+                        if (!isViewAttached()) return;
                         mView.hideProgress();
                         mView.showUnauthorizedError();
                     }
 
                     @Override
                     public void onFailed(Throwable throwable) {
+                        if (!isViewAttached()) return;
                         mView.hideProgress();
                         mView.showError(throwable.getMessage());
                     }

@@ -21,9 +21,10 @@ android {
         }
     }
 
-    // ref https://github.com/square/okio/issues/58
     lintOptions {
+        // ref https://github.com/square/okio/issues/58
         warning 'InvalidPackage'
+        abortOnError false
     }
 
     buildTypes {
@@ -37,6 +38,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
 }
 
