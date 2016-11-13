@@ -47,13 +47,11 @@ This sample is available
 If you wish to run your own **CI** (I'm using Travis) ensure you have the following environment variables on **your CI config**:
 
 * IS_ CI_JOB = true
-* CI_ PRODUCTION_ENDPOINT = http://gateway.marvel.com/v1/public/
 * CI_ PUBLIC_KEY = < YOUR-PUBLIC-KEY >
 * CI_ PRIVATE_KEY = < YOUR-PRIVATE-KEY >
 
 To run **locally** have your private and public keys in your **gradle.properties** file (project's root folder).
 
-* marvelProductionEndpoint = http://gateway.marvel.com/v1/public/
 * marvelPublicKey = < YOUR-PUBLIC-KEY >
 * marvelPrivateKey = < YOUR-PRIVATE-KEY >
 
