@@ -316,6 +316,12 @@ public class ListFragment extends Fragment implements ListContract.ListView,
     }
 
     @Override
+    public void onDestroyView() {
+        mCharactersRecycler.setAdapter(null);
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         mListPresenter.detachView();
         super.onDestroy();
