@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 11
-        targetSdkVersion 24
-        versionCode 5
-        versionName "1.0.2"
+        targetSdkVersion 25
+        versionCode 6
+        versionName "1.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -25,7 +25,8 @@ android {
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
-            testCoverageEnabled true
+            // Enable for ui-testing: // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
+//            testCoverageEnabled true
         }
 
         release {
