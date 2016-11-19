@@ -7,9 +7,11 @@ android {
     defaultConfig {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 11
-        targetSdkVersion 24
-        versionCode 5
-        versionName "1.0.2"
+        targetSdkVersion 25
+        versionCode 6
+        versionName "1.0.3"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     lintOptions {
@@ -18,16 +20,21 @@ android {
     }
 
     buildTypes {
+
         debug {
             minifyEnabled false
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
+            // Enable for ui-testing: // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
+//            testCoverageEnabled true
         }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -41,8 +48,17 @@ dependencies {
     releaseCompile project(path: ':core', configuration: 'release')
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.squareup.picasso:picasso:$picassoVersion"
-    // Functional tests dependencies
-//    androidTestCompile ("com.android.support.test.espresso:espresso-core:$espressoVersion") {
-//        transitive = false;
-//    }
+    // Instrumentation tests dependencies
+    androidTestCompile("com.android.support.test:runner:$testRunnerVersion") {
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$espressoVersion") {
+        exclude module: 'design'
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }

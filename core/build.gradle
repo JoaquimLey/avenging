@@ -8,14 +8,12 @@ android {
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 24
+        targetSdkVersion 25
 
         if (System.getenv().containsKey("IS_CI_JOB")) {
-            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"" + System.getenv("CI_PRODUCTION_ENDPOINT") + "\"")
             buildConfigField("String", "PUBLIC_KEY", "\"" + System.getenv("CI_PUBLIC_KEY") + "\"")
             buildConfigField("String", "PRIVATE_KEY", "\"" + System.getenv("CI_PRIVATE_KEY") + "\"")
         } else {
-            buildConfigField("String", "PRODUCTION_ENDPOINT", "\"${marvelProductionEndpoint}\"")
             buildConfigField("String", "PUBLIC_KEY", "\"${marvelPublicKey}\"")
             buildConfigField("String", "PRIVATE_KEY", "\"${marvelPrivateKey}\"")
         }
@@ -31,7 +29,8 @@ android {
 
         debug {
             minifyEnabled false
-            testCoverageEnabled true
+            // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
+//            testCoverageEnabled true
         }
 
         release {

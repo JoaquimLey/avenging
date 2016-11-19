@@ -7,15 +7,24 @@ android {
     defaultConfig {
         applicationId "com.joaquimley.avenging"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 4
         versionName "1.0.2"
     }
 
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
