@@ -18,7 +18,7 @@ android:
     - extra-android-support
     - extra-google-google_play_services
       # Specify at least one system image, if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-25
 
   licenses:
       - android-sdk-preview-license-.+
