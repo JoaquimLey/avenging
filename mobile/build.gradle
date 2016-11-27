@@ -26,7 +26,7 @@ android {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
             // Enable for ui-testing: // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
-//            testCoverageEnabled true
+            testCoverageEnabled true
         }
 
         release {

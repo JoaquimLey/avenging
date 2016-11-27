@@ -30,7 +30,7 @@ android {
         debug {
             minifyEnabled false
             // Enable for ui-testing: http://stackoverflow.com/questions/39195754/java-lang-noclassdeffounderror-failed-resolution-of-lorg-jacoco-agent-rt-inter
-//            testCoverageEnabled true
+            testCoverageEnabled true
         }
 
         release {

@@ -2,7 +2,7 @@
 
 #Avenging - MVP project
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Avenging-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/4545)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Oct 22, 2016-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/4545)
 [![Gitter room](https://img.shields.io/gitter/room/badges/shields.svg?style=false)](https://gitter.im/joaquimley/avenging)
 [![Build Status](https://travis-ci.org/JoaquimLey/avenging.svg?branch=development)](https://travis-ci.org/JoaquimLey/avenging)
 [![codecov](https://codecov.io/gh/JoaquimLey/avenging/branch/development/graph/badge.svg)](https://codecov.io/gh/JoaquimLey/avenging)
