@@ -11,14 +11,15 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by your project
-    - build-tools-25.0.0
-    - android-24
+    - build-tools-24.0.3
+    - android-25
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
     - extra-google-google_play_services
       # Specify at least one system image, if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-25
+    - sys-img-x86-android-25
 
   licenses:
       - android-sdk-preview-license-.+
@@ -56,8 +57,8 @@ script:
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew build core:connectedCheck
-  #- ./gradlew core:test --stacktrace
+  #- ./gradlew build core:connectedCheck
+  - ./gradlew core:test --stacktrace
   #- ./gradlew core:jacocoTestReport --stacktrace
 
 # Codecov

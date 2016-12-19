@@ -33,7 +33,7 @@ allprojects {
 
     project.ext {
         compileSdkVersion = 25
-        buildToolsVersion = '25.0.0'
+        buildToolsVersion = '25.0.1'
 
         junitVersion = '4.12'
         mockitoVersion = '1.10.19'

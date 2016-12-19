@@ -40,7 +40,7 @@ dependencies {
     debugCompile project(path: ':core', configuration: 'debug')
     releaseCompile project(path: ':core', configuration: 'release')
 
-    final PLAY_SERVICES_WEARABLE_VERSION = '9.8.0'
+    final PLAY_SERVICES_WEARABLE_VERSION = '10.0.1'
     final SUPPORT_WEARABLE_VERSION = '2.0.0-alpha1'
 
     compile "com.squareup.picasso:picasso:$picassoVersion"
