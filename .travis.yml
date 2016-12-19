@@ -11,14 +11,14 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by your project
-    - build-tools-24.0.2
-    - android-24
+    - build-tools-25.0.0
+    - android-25
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
     - extra-google-google_play_services
       # Specify at least one system image, if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-25
 
   licenses:
       - android-sdk-preview-license-.+
@@ -45,7 +45,7 @@ install:
 
 before_script:
     - chmod +x gradlew
-    - echo no | android create avd --force --name test --target android-24 --abi armeabi-v7a
+    - echo no | android create avd --force --name test --target android-25 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
@@ -56,8 +56,9 @@ script:
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  - ./gradlew core:test --stacktrace
-  - ./gradlew core:jacocoTestReport
+  - ./gradlew build core:connectedCheck
+  #- ./gradlew core:test --stacktrace
+  #- ./gradlew core:jacocoTestReport --stacktrace
 
 # Codecov
 after_success:
