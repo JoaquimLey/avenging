@@ -96,7 +96,7 @@ public class ListActivity extends Activity implements ListContract.ListView,
 
     @Override
     public void onListClick(CharacterMarvel character) {
-        CharacterActivity.newStartIntent(this, character);
+        startActivity(CharacterActivity.newStartIntent(this, character));
     }
 
     @Override
