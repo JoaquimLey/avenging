@@ -48,7 +48,7 @@ before_script:
     - echo no | android create avd --force --name test --target android-24 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim &
     - android-wait-for-emulator
-    - adb shell input keyevent 82 
+    - adb shell input keyevent 82 &
 
 # Build, and run tests
 script: 
@@ -56,8 +56,8 @@ script:
   # currently only doing a normal build to test Travis config
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
-  -  ./gradlew core:test --info
-  #- ./gradlew core:jacocoTestReport
+  - ./gradlew core:test --info
+  - ./gradlew core:jacocoTestReport
 
 # Codecov
 after_success:
