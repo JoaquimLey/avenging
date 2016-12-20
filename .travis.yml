@@ -17,7 +17,7 @@ android:
     - extra-google-m2repository
 
       # Specify at least one system image, if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-25
+    - sys-img-armeabi-v7a-android-25.0.1
     - sys-img-x86-android-25
 
   licenses:
