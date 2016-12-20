@@ -10,14 +10,17 @@ android:
   components:
     - tools
     - platform-tools
+   # - tools # Repeated on purpose
+    
     # The BuildTools version used by your project
     - build-tools-25.0.1
     - android-25
     - extra-android-m2repository
     - extra-google-m2repository
+
       # Specify at least one system image, if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-11
-    - sys-img-x86-android-11
+    #- sys-img-armeabi-v7a-android-11
+    #- sys-img-x86-android-
     - sys-img-armeabi-v7a-android-25
     - sys-img-x86-android-25
 
