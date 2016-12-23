@@ -11,7 +11,7 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by your project
-    - build-tools-25.0.1
+    - build-tools-25.1.0
     - android-25
     - extra-android-m2repository
     - extra-google-m2repository
@@ -57,8 +57,7 @@ script:
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
   #- ./gradlew core:test --info
-  #- ./gradlew core:jacocoTestReport
-  - ./gradlew core:build
+  - ./gradlew core:jacocoTestReport
 
 # Codecov
 after_success:

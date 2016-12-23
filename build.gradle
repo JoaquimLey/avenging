@@ -41,7 +41,7 @@ allprojects {
         espressoVersion = '2.2.2'
         testRunnerVersion = '0.5'
 
-        supportLibraryVersion = '25.0.1'
+        supportLibraryVersion = '25.1.0'
         playServicesVersion = '9.4.0'
         leakCanaryVersion = '1.5'
 
