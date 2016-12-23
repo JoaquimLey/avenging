@@ -45,7 +45,7 @@ install:
   - true
 
 before_script:
-  - echo no | android create avd --force -n test -target android-25 --abi google_apis/armeabi-v7a
+  - echo no | android create avd --force -n test -t android-25 --abi google_apis/armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   #- chmod +x gradlew
   #- echo no | android create avd --force --name test --target android-25 --abi armeabi-v7a
