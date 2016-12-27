@@ -15,6 +15,9 @@ android:
     - android-24
     # Additional components
     - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
+    - extra-google-google_play_services
 
     # Specify system images to run emulators during the tests
     #- sys-img-armeabi-v7a-android-24
