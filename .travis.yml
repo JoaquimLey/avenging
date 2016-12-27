@@ -4,7 +4,7 @@ jdk:
   # Jdk version used by your project
   - oraclejdk8
 
-sudo: false
+sudo: true
 
 android:
   components:
@@ -44,7 +44,7 @@ cache:
 before_install:
   - chmod +x gradlew
 
-#install:
+install:
   # Check install section: http://docs.travis-ci.com/user/build-configuration/#install
   # If you'd like to skip the install stage entirely, set it to true and nothing will be run.
   - true
