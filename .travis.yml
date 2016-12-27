@@ -60,7 +60,7 @@ script:
   #- ./gradlew mobile:functionalTests
   #- ./gradlew wear:functionalTests
   #- ./gradlew core:test --info
-  - ./gradlew core:jacocoTestReport
+  - ./gradlew core:build
 
 # Codecov
 after_success:
