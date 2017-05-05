@@ -1,6 +1,6 @@
 ![AppIcon](https://github.com/JoaquimLey/avenging/blob/development/core/src/main/res/mipmap-xxhdpi/ic_launcher.png) 
 
-#Avenging - MVP project
+# Avenging - MVP project
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Avenging-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/4545)
 [![MaterialUp](https://img.shields.io/badge/MaterialUp-Avenging-blue.svg?style=flat)](https://material.uplabs.com/posts/avenging-mvp-project)
@@ -10,7 +10,7 @@
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-17-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
 
-###Read more on the blog post: [Avening - MVP without RxJava or Dagger](https://blog.joaquimley.com/avenging-android-mvp-23461aebe9b5#.sc9ty759u)
+### Read more on the blog post: [Avening - MVP without RxJava or Dagger](https://blog.joaquimley.com/avenging-android-mvp-23461aebe9b5#.sc9ty759u)
 
 Android app built with an **MVP** approach **without** RxJava or Dagger. 
 
@@ -89,9 +89,14 @@ This library is designed to be used with Android 1.6 (API level 4) and higher. I
 * [Picasso](http://square.github.io/picasso/)
 A powerful image downloading and caching library for Android
 
+
+**Issues:**
+Fell free to open a new issue. Follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+
 ## Contributing
 
 Contributions are always welcome!
+
 Follow the "fork-and-pull" Git workflow.
 
  1. **Fork** the repo on GitHub
@@ -99,15 +104,9 @@ Follow the "fork-and-pull" Git workflow.
  3. **Commit** changes to your own branch
  4. **Merge** with current *development* branch
  5. **Push** your work back up to your fork
- 6. Submit a **Pull request** your changes can be reviewed
+ 7. Submit a **Pull request** your changes can be reviewed (please refere the issue if reported)
 
-**NOTE:**
-Prevent code-style related changes (at least run ⌘+O, ⌘+L) before commiting.
-
-Read more: [CONTRIBUTIING.MD](../development/CONTRIBUTIING.MD)
-
-**Issues:**
-If you found an unreported issue/bug please follow the [ISSUE_TEMPLATE.MD](../development/ISSUE_TEMPLATE.MD)
+**Prevent** code-style related changes (at least run Ctrl+⌥+O, ⌥+⌘+L) before commiting.
 
 
 ### License
